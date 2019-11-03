@@ -9,14 +9,29 @@ const envCall = axios.create({
 });
 
 export const findEmployees = (query: string) => {
-  console.log('getEmployee called and ENV: ', ENV, query)
-  ENV.LDAP_SERVER = "http://mention-ldap.naverlabs.com:9090"
   return axios({
       method: 'GET',
       url: `${ENV.LDAP_SERVER}/api/users/search?q=*${query}*&searchFields=displayName`,
       headers: {
           "Content-Type": "text/plain"
       }
+  })
+}
+
+export const findGithubUserByEmail = (email: string) => {
+  return axios({
+    method: 'GET',
+    url: `${ENV.GITHUB_API_BASE_URL}/search/users?q=${email}+in:email`,
+    headers: {
+      "Authorization": `token ${ENV.BOT_TOKEN}`
+    }
+  })
+}
+
+export const findUserPhotoByEmail = (email: string) => {
+  return axios({
+    method: 'GET',
+    url: `${ENV.PHOTO_SERVER}/json/${email}`
   })
 }
 

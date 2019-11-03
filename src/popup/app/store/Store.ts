@@ -1,13 +1,9 @@
 import { observable, action } from 'mobx'
 
-import { findEmployees, loadEnv } from '../service'
+import { findEmployees, loadEnv, findUserPhotoByEmail } from '../service'
+import { IEmployee } from '../components/employee/Employee'
 
-interface IEmployee {
-  employees: Array<any>
-  state: string
-}
-
-export class Store implements IEmployee {
+export class Store {
   @observable employees: Array<any> = []
   @observable state = "pending" // "pending" / "done" / "error"
 
@@ -33,10 +29,12 @@ export class Store implements IEmployee {
       }
 
       let found: Array<IEmployee> = []
+
       response.data._embedded.users.map((user: any) => {
         if (this.isRequiredToHide(user)) {
           return;
         }
+        user.photoUrl = '/images/default-avatar-64.png'
         found.push(user)
       })
       this.setEmployees(found)
@@ -44,7 +42,7 @@ export class Store implements IEmployee {
   }
 }
 
-export const createStore = () => {
+export const createStore = (): Store => {
   return new Store()
 };
 

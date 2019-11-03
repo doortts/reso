@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { Store } from './store/Store'
 import { storeContext } from './context'
 
 interface Props {
@@ -11,17 +12,24 @@ interface Props {
 
 export const SearchItem: React.FC<Props> = props => {
   const classes = useStyles()
-  const store = React.useContext(storeContext)
+  const store = React.useContext(storeContext) || new Store()
   const [keywords, setKeywords] = useState("")
 
   const handleChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value)
-  };
+  }
 
   const handleClick = () => {
-    console.log(keywords)
     store.getEmployees(keywords)
-  };
+  }
+
+  const handleKeyDown = () => (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      store.setEmployees([])
+      handleClick()
+    }
+  }
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
@@ -31,7 +39,9 @@ export const SearchItem: React.FC<Props> = props => {
         className={classes.textField}
         value={keywords}
         onChange={handleChange()}
+        onKeyDown={handleKeyDown()}
         margin="dense"
+        autoFocus
       />
       <Button
         variant="outlined"

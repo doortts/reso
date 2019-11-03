@@ -16,6 +16,7 @@ export interface IEmployee {
   department: string
   mail: string
   telephoneNumber: string
+  photoUrl: string
 }
 
 interface Props {
@@ -50,7 +51,7 @@ export const Employee: React.FC<Props> = props => {
       <ListItemAvatar>
         <Avatar>
           <img
-            src="https://photoemp.navercorp.com/empPhoto/thumbnail/A1701090209729.jpg" />
+            src={employee.photoUrl} width="40px"/>
         </Avatar>
       </ListItemAvatar>
       <ListItemText

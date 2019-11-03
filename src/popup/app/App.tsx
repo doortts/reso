@@ -1,5 +1,4 @@
 import React from 'react';
-import 'typeface-roboto';
 import Grid from '@material-ui/core/Grid';
 
 import StoreProvider from './context';
