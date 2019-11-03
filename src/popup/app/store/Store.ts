@@ -5,7 +5,7 @@ import { IEmployee } from '../components/employee/Employee'
 
 export class Store {
   @observable employees: Array<any> = []
-  @observable state = "pending" // "pending" / "done" / "error"
+  @observable state = "Ready" // "pending" / "done" / "error"
 
   constructor() {
     loadEnv()
@@ -23,6 +23,7 @@ export class Store {
 
   @action
   getEmployees = (query: string) => {
+    this.state='pending..'
     findEmployees(query).then(response => {
       if (!response.data._embedded) {
         return;
@@ -38,6 +39,7 @@ export class Store {
         found.push(user)
       })
       this.setEmployees(found)
+      this.state='Done'
     })
   }
 }

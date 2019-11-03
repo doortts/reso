@@ -8,6 +8,7 @@ import ShortcutLinks from './ShortcutLinks'
 import Employees from './components/employee/Employees'
 import Repositories from './components/repository/Repositories'
 import Issues from './components/issue/Issues'
+import { storeContext } from './context'
 
 const App: React.FC = () => {
   return (
