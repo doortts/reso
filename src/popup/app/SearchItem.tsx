@@ -23,10 +23,9 @@ export const SearchItem: React.FC<Props> = props => {
     store.getEmployees(keywords)
   }
 
-  const handleKeyDown = () => (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      store.setEmployees([])
       handleClick()
     }
   }
@@ -39,7 +38,7 @@ export const SearchItem: React.FC<Props> = props => {
         className={classes.textField}
         value={keywords}
         onChange={handleChange()}
-        onKeyDown={handleKeyDown()}
+        onKeyPress={e => handleKeyPress(e)}
         margin="dense"
         autoFocus
       />
