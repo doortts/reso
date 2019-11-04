@@ -42,6 +42,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
+}
+
 export const Employee: React.FC<Props> = props => {
   const classes = useStyles()
   const { employee } = props
@@ -51,7 +55,10 @@ export const Employee: React.FC<Props> = props => {
       <ListItemAvatar>
         <Avatar>
           <img
-            src={employee.photoUrl} width="40px"/>
+            src={employee.photoUrl}
+            width="40px"
+            onError={e => addDefaultSrc(e)}
+          />
         </Avatar>
       </ListItemAvatar>
       <ListItemText

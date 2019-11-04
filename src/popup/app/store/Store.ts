@@ -21,25 +21,39 @@ export class Store {
     this.employees = employees
   }
 
-  @action
   getEmployees = (query: string) => {
-    this.state='pending..'
+    this.state='Searching..'
     findEmployees(query).then(response => {
       if (!response.data._embedded) {
         return;
       }
 
       let found: Array<IEmployee> = []
+      let foundCount = 0;
+      let total = response.data._embedded.users.length;
 
       response.data._embedded.users.map((user: any) => {
         if (this.isRequiredToHide(user)) {
+          foundCount++
           return;
         }
-        user.photoUrl = '/images/default-avatar-64.png'
         found.push(user)
+
+        findUserPhotoByEmail(user.mail).then(response => {
+          foundCount++
+          if (response.status === 200) {
+            user.photoUrl = response.data.photoUrl;
+          } else {
+            console.error(response)
+          }
+          if (foundCount === total) {
+            this.state='Found: ' + foundCount
+            this.setEmployees(found)
+          }
+        }, error => {
+          console.error(user, error)
+        })
       })
-      this.setEmployees(found)
-      this.state='Done'
     })
   }
 }
