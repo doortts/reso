@@ -1,6 +1,9 @@
 import { observable, action } from 'mobx'
 
-import { findEmployees, loadEnv, findUserPhotoByEmail } from '../service'
+import {
+  findEmployees, loadEnv,
+  findUserPhotoByEmail, sendErrorLog
+} from '../service'
 import { IEmployee } from '../components/employee/Employee'
 
 export class Store {
@@ -22,7 +25,7 @@ export class Store {
   }
 
   getEmployees = (query: string) => {
-    this.state='Searching..'
+    this.state = 'Searching..'
     findEmployees(query).then(response => {
       if (!response.data._embedded) {
         return;
@@ -44,14 +47,15 @@ export class Store {
           if (response.status === 200) {
             user.photoUrl = response.data.photoUrl;
           } else {
-            console.error(response)
+            sendErrorLog(response)
           }
           if (foundCount === total) {
-            this.state='Found: ' + foundCount
+            this.state = 'Found: ' + foundCount
             this.setEmployees(found)
           }
         }, error => {
           console.error(user, error)
+          sendErrorLog(user, error)
         })
       })
     })

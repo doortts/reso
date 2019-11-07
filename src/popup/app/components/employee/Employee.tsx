@@ -58,6 +58,7 @@ export const Employee: React.FC<Props> = props => {
             src={employee.photoUrl}
             width="40px"
             onError={e => addDefaultSrc(e)}
+            loading="lazy"
           />
         </Avatar>
       </ListItemAvatar>

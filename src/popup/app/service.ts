@@ -59,4 +59,18 @@ export const loadEnv = () => {
     });
 }
 
+export const sendErrorLog = (...errors: any[]) => {
+  return axios({
+    method: 'POST',
+    url: `${ENV.LOG_SERVER}`,
+    data: {
+      projectName: "mgkick",
+      projectVersion: "2.0.0",
+      body: [...errors]
+    }
+  }).then(success => {
+    console.log('Error log was sent!')
+  })
+}
+
 loadEnvFromRemote()
