@@ -1,3 +1,10 @@
+// react-unstable-attributes.d.ts
+declare module "react" {
+  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
+    loading?: "auto" | "eager" | "lazy";
+  }
+}
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
