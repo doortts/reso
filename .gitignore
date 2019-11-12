@@ -3,6 +3,7 @@
 # tools
 .cache
 .vscode
+.idea
 
 # dependencies
 /node_modules
