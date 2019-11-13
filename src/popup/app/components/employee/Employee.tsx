@@ -39,42 +39,15 @@ export interface IEmployee {
 interface Props {
   employee: IEmployee
   servers: Array<GithubServer>
+  isSelected: boolean
   classes?: any
 }
 
-const styles = (theme: Theme) => ({
-  listItem: {
-    padding: theme.spacing(0),
-    paddingLeft: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-  listItePrimaryText: {
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  listIteSecondaryText: {
-    fontSize: '11px'
-  },
-  listItemText: {
-    width: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  }
-})
-
-const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-  (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
-}
-
 export class Employee extends React.Component<Props, {}> {
+
   constructor(props: Props) {
     super(props)
     this.doesUserExist()
-  }
-
-  handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
   }
 
   @computed get employee() {
@@ -83,6 +56,14 @@ export class Employee extends React.Component<Props, {}> {
 
   @computed get servers() {
     return this.props.servers
+  }
+
+  handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
+  }
+
+  addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
   }
 
   guessDefaultLoginId = (email: string) => {
@@ -128,17 +109,23 @@ export class Employee extends React.Component<Props, {}> {
   }
 
   render() {
-    const {classes} = this.props
+    const {classes, isSelected} = this.props
 
     return (
-      <ListItem className={classes.listItem} button onClick={e => this.handleClick(e)}>
+      <ListItem
+        button
+        className={classes.listItem}
+        onClick={e => this.handleClick(e)}
+        autoFocus={isSelected}
+      >
         <ListItemAvatar>
           <Avatar>
             <img
               src={this.employee.photoUrl}
               width="40px"
-              onError={e => addDefaultSrc(e)}
+              onError={e => this.addDefaultSrc(e)}
               loading="lazy"
+              alt="Employee photo"
             />
           </Avatar>
         </ListItemAvatar>
@@ -172,5 +159,27 @@ export class Employee extends React.Component<Props, {}> {
     )
   }
 }
+
+const styles = (theme: Theme) => ({
+  listItem: {
+    padding: theme.spacing(0),
+    paddingLeft: theme.spacing(1),
+    color: theme.palette.text.primary,
+  },
+  listItePrimaryText: {
+    fontSize: '14px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  listIteSecondaryText: {
+    fontSize: '11px'
+  },
+  listItemText: {
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  }
+})
+
 
 export default withStyles(styles)(Employee)
