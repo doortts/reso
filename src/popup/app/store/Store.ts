@@ -1,17 +1,69 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
+import axios from 'axios'
 
-import {
-  findEmployees, loadEnv,
-  findUserPhotoByEmail, sendErrorLog
-} from '../service'
 import { IEmployee } from '../components/employee/Employee'
+import { storage } from '../models/LocalStorage'
+import { IRemoteServer, GithubServer } from '../models/GithubServer'
+
+export interface IEnv {
+  LDAP_SERVER: string
+  PHOTO_SERVER: string
+  CLIENT_ID: string
+  GITHUB_ENTERPRISE_API_BASE_URLS: Array<IRemoteServer>
+  MAIL_PAGE: string
+  ADDRESS_PAGE: string
+  URLS: Object
+  SUPPORT_PAGE: string
+  LAST_UPDATE: string
+  LOG_SERVER: string
+}
+
+const envCall = axios.create({
+  baseURL: 'http://mention.naverlabs.com',
+  timeout: 1000
+})
 
 export class Store {
   @observable employees: Array<any> = []
   @observable state = "Ready" // "pending" / "done" / "error"
+  @observable githubServers: Array<GithubServer> = []
+
+  env: IEnv = {} as any
 
   constructor() {
-    loadEnv()
+    this.loadEnv(this.env)
+  }
+
+  loadEnv = (env: IEnv) => {
+    storage.get({
+      ENV: {}
+    }, (local: any) => {
+      if (!local.ENV.LDAP_SERVER) {
+        this.loadEnvFromRemote(env, this.init);
+      } else {
+        Object.assign(this.env, local.ENV);
+        this.loadEnvFromRemote(env, this.init);
+      }
+    });
+  }
+
+  findUserPhotoByEmail = (email: string) => {
+    return axios({
+      method: 'GET',
+      url: `${this.env.PHOTO_SERVER}/json/${email}`
+    })
+  }
+
+  loadEnvFromRemote = (env: IEnv, callback: Function) => {
+    envCall.get('/').then(function (response) {
+      if (response.status === 200) {
+        Object.assign(env, response.data);
+        storage.set({
+          ENV: env
+        });
+        callback()
+      }
+    });
   }
 
   isRequiredToHide(user: any) {
@@ -24,9 +76,20 @@ export class Store {
     this.employees = employees
   }
 
+  findEmployees = (query: string) => {
+    return axios({
+      method: 'GET',
+      url: `${this.env.LDAP_SERVER}/api/users/search?q=*${query}*&searchFields=displayName`,
+      headers: {
+        "Content-Type": "text/plain"
+      }
+    })
+  }
+
+  @action
   getEmployees = (query: string) => {
     this.state = 'Searching..'
-    findEmployees(query).then(response => {
+    this.findEmployees(query).then(response => {
       if (!response.data._embedded) {
         return;
       }
@@ -35,19 +98,19 @@ export class Store {
       let foundCount = 0;
       let total = response.data._embedded.users.length;
 
-      response.data._embedded.users.map((user: any) => {
+      response.data._embedded.users.map((user: IEmployee) => {
         if (this.isRequiredToHide(user)) {
           foundCount++
           return;
         }
         found.push(user)
 
-        findUserPhotoByEmail(user.mail).then(response => {
+        this.findUserPhotoByEmail(user.mail).then(response => {
           foundCount++
           if (response.status === 200) {
             user.photoUrl = response.data.photoUrl;
           } else {
-            sendErrorLog(response)
+            this.sendErrorLog(response)
           }
           if (foundCount === total) {
             this.state = 'Found: ' + foundCount
@@ -55,10 +118,39 @@ export class Store {
           }
         }, error => {
           console.error(user, error)
-          sendErrorLog(user, error)
+          this.sendErrorLog(user, error)
         })
       })
     })
+  }
+
+  sendErrorLog = async (...errors: any[]) => {
+    const success = await axios({
+      method: 'POST',
+      url: `${this.env.LOG_SERVER}`,
+      data: {
+        projectName: "mgkick",
+        projectVersion: "2.0.0",
+        body: [...errors]
+      }
+    })
+    console.log('Error log was sent!')
+  }
+
+  init = () => {
+    if (this.githubServers.length === 0) {
+      this.env.GITHUB_ENTERPRISE_API_BASE_URLS.forEach((server: IRemoteServer) => {
+        if (!this.findByName(server.name)) {
+          this.githubServers.push(new GithubServer(server.name, server.base_url, server.token))
+        }
+      })
+    }
+
+    return this.githubServers
+  }
+
+  findByName = (name: string) => {
+    return this.githubServers.find(server => server.name === name)
   }
 }
 

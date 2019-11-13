@@ -15,7 +15,7 @@ export const SearchItem: React.FC<Props> = props => {
   const store = React.useContext(storeContext) || new Store()
   const [keywords, setKeywords] = useState("")
 
-  const handleChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value)
   }
 
@@ -37,8 +37,8 @@ export const SearchItem: React.FC<Props> = props => {
         placeholder="Type keywords"
         className={classes.textField}
         value={keywords}
-        onChange={handleChange()}
-        onKeyPress={e => handleKeyPress(e)}
+        onChange={handleChange}
+        onKeyPress={handleKeyPress}
         margin="dense"
         autoFocus
       />
@@ -53,7 +53,7 @@ export const SearchItem: React.FC<Props> = props => {
       </Button>
       <div>{keywords}</div>
     </form>
-  );
+  )
 }
 
 const useStyles = makeStyles(theme => ({
