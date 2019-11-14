@@ -33,15 +33,13 @@ export const Employees: React.FC<Props> = props => {
     switch (e.key) {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
-        if (selectedIndex + 1 < store.employees.length) {
-          setSelectedIndex(selectedIndex + 1)
-        }
+        store.increaseSelectedEmployeeIndex()
+        console.log(store.selectedEmployeeIndex)
         break
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
-        if (selectedIndex > 0) {
-          setSelectedIndex(selectedIndex - 1)
-        }
+        store.decreaseSelectedEmployeeIndex()
+        console.log(store.selectedEmployeeIndex)
         break
       default:
         break
@@ -57,15 +55,11 @@ export const Employees: React.FC<Props> = props => {
           <div>Employee list</div>
           <List>
             {store.employees.map((employee: IEmployee) => {
-              let isSelected = false
-              if (listIndex === selectedIndex) isSelected = true
-              listIndex++
               return (
                 <Employee
                   key={employee.uid}
                   employee={employee}
                   servers={store.githubServers}
-                  isSelected={isSelected}
                 />
               )
             })}

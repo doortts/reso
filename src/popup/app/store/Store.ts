@@ -27,6 +27,7 @@ export class Store {
   @observable employees: Array<any> = []
   @observable state = "Ready" // "pending" / "done" / "error"
   @observable githubServers: Array<GithubServer> = []
+  @observable selectedEmployeeIndex = 0
 
   env: IEnv = {} as any
 
@@ -152,6 +153,21 @@ export class Store {
   findByName = (name: string) => {
     return this.githubServers.find(server => server.name === name)
   }
+
+  @action
+  increaseSelectedEmployeeIndex = () => {
+    if (this.selectedEmployeeIndex + 1 < this.employees.length) {
+      this.selectedEmployeeIndex++
+    }
+  }
+
+  @action
+  decreaseSelectedEmployeeIndex = () => {
+    if (this.selectedEmployeeIndex > 0) {
+      this.selectedEmployeeIndex--
+    }
+  }
+
 }
 
 export const createStore = (): Store => {

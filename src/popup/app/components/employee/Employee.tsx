@@ -1,4 +1,6 @@
 // react-unstable-attributes.d.ts
+import { EmployeeView } from './EmployeeView'
+
 declare module 'react' {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
     loading?: 'auto' | 'eager' | 'lazy';
@@ -39,7 +41,6 @@ export interface IEmployee {
 interface Props {
   employee: IEmployee
   servers: Array<GithubServer>
-  isSelected: boolean
   classes?: any
 }
 
@@ -60,10 +61,6 @@ export class Employee extends React.Component<Props, {}> {
 
   handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
-  }
-
-  addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
   }
 
   guessDefaultLoginId = (email: string) => {
@@ -109,77 +106,15 @@ export class Employee extends React.Component<Props, {}> {
   }
 
   render() {
-    const {classes, isSelected} = this.props
-
     return (
-      <ListItem
-        button
-        className={classes.listItem}
-        onClick={e => this.handleClick(e)}
-        autoFocus={isSelected}
-      >
-        <ListItemAvatar>
-          <Avatar>
-            <img
-              src={this.employee.photoUrl}
-              width="40px"
-              onError={e => this.addDefaultSrc(e)}
-              loading="lazy"
-              alt="Employee photo"
-            />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          disableTypography
-          primary={
-            <>
-              <Typography
-                variant="inherit"
-                className={classes.listItePrimaryText}
-              >
-                <span>{this.employee.displayName}</span>
-                <ServerNames user={this.employee} servers={this.employee.idExistingServers} />
-              </Typography>
-            </>
-          }
-          secondary={
-            <div className={classes.listItemText}>
-              <Typography
-                className={classes.listIteSecondaryText}
-                color="textSecondary"
-                variant="inherit"
-                noWrap
-              >
-                {this.employee.department}, {this.employee.mail}
-              </Typography>
-            </div>
-          } />
-        <Starred />
-      </ListItem>
+      <EmployeeView
+        employee={this.employee}
+        handleClick={this.handleClick}
+      />
     )
   }
 }
 
-const styles = (theme: Theme) => ({
-  listItem: {
-    padding: theme.spacing(0),
-    paddingLeft: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-  listItePrimaryText: {
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  listIteSecondaryText: {
-    fontSize: '11px'
-  },
-  listItemText: {
-    width: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  }
-})
 
 
-export default withStyles(styles)(Employee)
+export default Employee
