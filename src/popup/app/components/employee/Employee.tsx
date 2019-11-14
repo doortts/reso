@@ -9,15 +9,8 @@ declare module 'react' {
 
 import React from 'react'
 import { computed } from 'mobx'
-import { withStyles, Theme } from '@material-ui/core/styles'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import Typography from '@material-ui/core/Typography'
+import { Observer } from 'mobx-react-lite'
 
-import Starred from '../../Starred'
-import ServerNames from './ServerNames'
 import { GithubServer } from '../../models/GithubServer'
 
 interface IServer {
@@ -59,7 +52,7 @@ export class Employee extends React.Component<Props, {}> {
     return this.props.servers
   }
 
-  handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLElement>) => {
     this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
   }
 
@@ -107,14 +100,14 @@ export class Employee extends React.Component<Props, {}> {
 
   render() {
     return (
-      <EmployeeView
-        employee={this.employee}
-        handleClick={this.handleClick}
-      />
+      <Observer render={() => (
+        <EmployeeView
+          employee={this.employee}
+          handleClick={this.handleClick}
+        />
+      )} />
     )
   }
 }
-
-
 
 export default Employee

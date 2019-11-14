@@ -27,7 +27,7 @@ export const Employees: React.FC<Props> = props => {
   const store: Store = React.useContext(storeContext) || new Store()
   if (!store) throw Error('Store shouldn\'t be null')
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
     e.preventDefault()
 
     switch (e.key) {
@@ -46,14 +46,12 @@ export const Employees: React.FC<Props> = props => {
     }
   }
 
-  let listIndex = 0
-
   return useObserver(() => {
     return (
-      <Grid item xs={4} onKeyDown={handleKeyDown}>
+      <Grid item xs={4} onKeyPress={handleKeyPress}>
         <Paper className={classes.paper}>
           <div>Employee list</div>
-          <List>
+          <ul>
             {store.employees.map((employee: IEmployee) => {
               return (
                 <Employee
@@ -63,7 +61,7 @@ export const Employees: React.FC<Props> = props => {
                 />
               )
             })}
-          </List>
+          </ul>
         </Paper>
       </Grid>
     )

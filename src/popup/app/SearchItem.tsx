@@ -24,10 +24,28 @@ export const SearchItem: React.FC<Props> = props => {
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log(e.key)
     if (e.key === 'Enter') {
       e.preventDefault()
       handleClick()
     }
+
+    switch (e.key) {
+      case 'Down': // IE/Edge specific value
+      case 'ArrowDown':
+        store.increaseSelectedEmployeeIndex()
+        console.log(store.selectedEmployeeIndex)
+        break
+      case 'Up': // IE/Edge specific value
+      case 'ArrowUp':
+        store.decreaseSelectedEmployeeIndex()
+        console.log(store.selectedEmployeeIndex)
+        break
+      default:
+        console.log(e.key)
+        break
+    }
+
   }
 
   return (
@@ -38,7 +56,7 @@ export const SearchItem: React.FC<Props> = props => {
         className={classes.textField}
         value={keywords}
         onChange={handleChange}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyPress}
         margin="dense"
         autoFocus
       />

@@ -9,7 +9,7 @@ import Starred from '../../Starred'
 import { useStore } from '../../context'
 import { IEmployee } from './Employee'
 import { makeStyles, Theme } from '@material-ui/core'
-import { observer } from 'mobx-react-lite'
+import { observer, useObserver } from 'mobx-react-lite'
 
 const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
@@ -38,30 +38,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface Props {
   employee: IEmployee
-  handleClick: (e: React.MouseEvent<HTMLDivElement>) => void
+  handleClick: (e: React.MouseEvent<HTMLElement>) => void
 }
 
 export const EmployeeView: React.FC<Props> = observer<Props>(props => {
   const { employee, handleClick } = props
-  let isSelected = false
+  let isSelected = { backgroundColor: 'white'}
 
   const store = useStore()
-  const classes = useStyles()
 
   // TODO: Move to store
-  if( store.employees[store.selectedEmployeeIndex].mail === employee.mail ) {
-    isSelected = true
+  if (store.employees[store.selectedEmployeeIndex].mail === employee.mail) {
+    isSelected = { backgroundColor: 'lightgrey'}
   }
 
-  return (
-    <ListItem
-      button
-      className={classes.listItem}
+  const outline = {display: 'flex'}
+  return useObserver(() => (
+    <li
       onClick={handleClick}
-      autoFocus={isSelected}
+      style={isSelected}
     >
-      <ListItemAvatar>
-        <Avatar>
+        <div style={outline}>
+        <div >
           <img
             src={employee.photoUrl}
             width="40px"
@@ -69,34 +67,17 @@ export const EmployeeView: React.FC<Props> = observer<Props>(props => {
             loading="lazy"
             alt="Employee photo"
           />
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText
-        disableTypography
-        primary={
-          <>
-            <Typography
-              variant="inherit"
-              className={classes.listItePrimaryText}
-            >
-              <span>{employee.displayName}</span>
-              <ServerNames user={employee} servers={employee.idExistingServers} />
-            </Typography>
-          </>
-        }
-        secondary={
-          <div className={classes.listItemText}>
-            <Typography
-              className={classes.listIteSecondaryText}
-              color="textSecondary"
-              variant="inherit"
-              noWrap
-            >
-              {employee.department}, {employee.mail}
-            </Typography>
+        </div>
+        <div>
+          <div>
+            <span>{employee.displayName}</span>
+            <ServerNames user={employee} servers={employee.idExistingServers} />
           </div>
-        } />
-      <Starred />
-    </ListItem>
-  )
+          <div>
+            {employee.department}, {employee.mail}
+          </div>
+        </div>
+      </div>
+    </li>
+  ))
 })
