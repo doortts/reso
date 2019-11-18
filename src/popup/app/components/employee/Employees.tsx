@@ -17,17 +17,22 @@ const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(1),
     color: theme.palette.text.secondary,
+    maxHeight: '500px'
   },
+  ul: {
+    overflow: 'auto',
+    maxHeight: '400px',
+    listStyleType: 'none'
+  }
 }))
 
 export const Employees: React.FC<Props> = props => {
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const store: Store = React.useContext(storeContext) || new Store()
   if (!store) throw Error('Store shouldn\'t be null')
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     e.preventDefault()
 
     switch (e.key) {
@@ -48,16 +53,17 @@ export const Employees: React.FC<Props> = props => {
 
   return useObserver(() => {
     return (
-      <Grid item xs={4} onKeyPress={handleKeyPress}>
+      <Grid item xs={4}>
         <Paper className={classes.paper}>
           <div>Employee list</div>
-          <ul>
+          <ul className={classes.ul}>
             {store.employees.map((employee: IEmployee) => {
               return (
                 <Employee
                   key={employee.uid}
                   employee={employee}
                   servers={store.githubServers}
+                  onKeyDown={handleKeyDown}
                 />
               )
             })}

@@ -35,6 +35,7 @@ interface Props {
   employee: IEmployee
   servers: Array<GithubServer>
   classes?: any
+  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void
 }
 
 export class Employee extends React.Component<Props, {}> {
@@ -104,6 +105,7 @@ export class Employee extends React.Component<Props, {}> {
         <EmployeeView
           employee={this.employee}
           handleClick={this.handleClick}
+          onKeyDown={this.props.onKeyDown}
         />
       )} />
     )
