@@ -8,6 +8,8 @@ import ShortcutLinks from './ShortcutLinks'
 import Employees from './components/employee/Employees'
 import Repositories from './components/repository/Repositories'
 import Issues from './components/issue/Issues'
+import ResetCss from './global-styles/css-reset'
+import Scrollbar from './global-styles/scrollbar'
 
 const App: React.FC = () => {
   return (
@@ -22,6 +24,8 @@ const App: React.FC = () => {
           <Issues />
         </Grid>
       </div>
+      <ResetCss />
+      <Scrollbar />
     </StoreProvider>
   );
 }
