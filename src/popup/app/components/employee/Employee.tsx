@@ -13,7 +13,7 @@ import { Observer } from 'mobx-react-lite'
 
 import { GithubServer } from '../../models/GithubServer'
 
-interface IServer {
+export interface IServer {
   name: string,
   loginId: string
 }

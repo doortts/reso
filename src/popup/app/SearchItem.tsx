@@ -24,7 +24,6 @@ export const SearchItem: React.FC<Props> = props => {
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log(e.key)
     if (e.key === 'Enter') {
       e.preventDefault()
       handleClick()
@@ -42,7 +41,6 @@ export const SearchItem: React.FC<Props> = props => {
         console.log(store.selectedEmployeeIndex)
         break
       default:
-        console.log(e.key)
         break
     }
 

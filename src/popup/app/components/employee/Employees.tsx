@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const Employees: React.FC<Props> = props => {
+export const Employees: React.FC<Props> = React.memo(props => {
   const classes = useStyles()
 
   const store: Store = React.useContext(storeContext) || new Store()
@@ -39,12 +39,10 @@ export const Employees: React.FC<Props> = props => {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
         store.increaseSelectedEmployeeIndex()
-        console.log(store.selectedEmployeeIndex)
         break
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
         store.decreaseSelectedEmployeeIndex()
-        console.log(store.selectedEmployeeIndex)
         break
       default:
         break
@@ -72,6 +70,6 @@ export const Employees: React.FC<Props> = props => {
       </Grid>
     )
   })
-}
+})
 
 export default Employees
