@@ -1,5 +1,4 @@
 import { ServerStore } from '../ServerStore'
-import Employee, { IEmployee } from '../../components/employee/Employee'
 
 const mockEnv = {
   "LDAP_SERVER": "https://ldap-server.example.com",

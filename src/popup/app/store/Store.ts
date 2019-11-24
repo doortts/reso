@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import axios from 'axios'
 
-import { IEmployee } from '../components/employee/Employee'
+import { IEmployee } from '../components/employee/EmployeeContainer'
 import { storage } from '../models/LocalStorage'
 import { IRemoteServer, GithubServer } from '../models/GithubServer'
 
@@ -24,7 +24,7 @@ const envCall = axios.create({
 })
 
 export class Store {
-  @observable employees: Array<any> = []
+  @observable employees: Array<IEmployee> = []
   @observable state = "Ready" // "pending" / "done" / "error"
   @observable githubServers: Array<GithubServer> = []
   @observable selectedEmployeeIndex = 0

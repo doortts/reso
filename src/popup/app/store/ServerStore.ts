@@ -2,7 +2,7 @@ import {observable, action, computed} from 'mobx'
 
 import {IEnv} from './Store'
 import {GithubServer, IRemoteServer} from '../models/GithubServer'
-import {IEmployee} from '../components/employee/Employee'
+import {IEmployee} from '../components/employee/EmployeeContainer'
 
 export class ServerStore {
   githubServers: Array<GithubServer> = []

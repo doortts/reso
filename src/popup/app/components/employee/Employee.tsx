@@ -1,115 +1,81 @@
-// react-unstable-attributes.d.ts
+import React, { useRef } from 'react'
+import { useStore } from '../../context'
+import { IEmployee } from './EmployeeContainer'
+import { makeStyles, Theme } from '@material-ui/core'
+import { observer } from 'mobx-react-lite'
+import styled from 'styled-components'
 import { EmployeeView } from './EmployeeView'
-
-declare module 'react' {
-  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: 'auto' | 'eager' | 'lazy';
-  }
-}
-
-import React from 'react'
-import { computed } from 'mobx'
-import { Observer } from 'mobx-react-lite'
-
-import { GithubServer } from '../../models/GithubServer'
-
-export interface IServer {
-  name: string,
-  loginId: string
-}
-
-export interface IEmployee {
-  uid: string
-  cn: string
-  displayName: string
-  employeeNumber: string
-  company: string
-  department: string
-  mail: string
-  telephoneNumber: string
-  photoUrl?: string
-  idExistingServers: Array<IServer>
-}
+import ListItem from '@material-ui/core/ListItem'
 
 interface Props {
   employee: IEmployee
-  servers: Array<GithubServer>
-  classes?: any
-  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void
+  isSelected: boolean
+  handleClick: (e: React.MouseEvent<HTMLElement>) => void
 }
 
-export class Employee extends React.Component<Props, {}> {
+export const Employee: React.FC<Props> = observer<Props>(props => {
+  const { employee, handleClick, isSelected } = props
 
-  constructor(props: Props) {
-    super(props)
-    this.doesUserExist()
+  let selectedStyle = isSelected ? { backgroundColor: 'lightgray' } : { backgroundColor: 'white' }
+
+  const store = useStore()
+  const classes = useStyles()
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    e.preventDefault()
+
+    switch (e.key) {
+      case 'Down': // IE/Edge specific value
+      case 'ArrowDown':
+        store.increaseSelectedEmployeeIndex()
+        break
+      case 'Up': // IE/Edge specific value
+      case 'ArrowUp':
+        store.decreaseSelectedEmployeeIndex()
+        break
+      default:
+        break
+    }
   }
 
-  @computed get employee() {
-    return this.props.employee
+  console.log('Employee.tsx')
+  return (
+    <ListItem
+      onClick={handleClick}
+      className={classes.listItem}
+      onKeyDown={handleKeyDown}
+      style={selectedStyle}
+      tabIndex={-1}
+      autoFocus={isSelected}
+    >
+      <Contents>
+        <EmployeeView employee={employee} />
+      </Contents>
+    </ListItem>
+  )
+})
+
+const useStyles = makeStyles((theme: Theme) => ({
+  listItem: {
+    padding: theme.spacing(0),
+    paddingLeft: theme.spacing(1),
+    color: theme.palette.text.primary,
+  },
+  listItePrimaryText: {
+    fontSize: '14px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  listIteSecondaryText: {
+    fontSize: '11px'
+  },
+  listItemText: {
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
+}))
 
-  @computed get servers() {
-    return this.props.servers
-  }
-
-  handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
-  }
-
-  guessDefaultLoginId = (email: string) => {
-    return email.split('@')[0].replace(/\./g, '-')
-  }
-
-  doesUserExist = () => {
-    var loginId = this.guessDefaultLoginId(this.employee.mail)
-    this.employee.idExistingServers = []
-
-    this.servers.map(targetServer => {
-      targetServer.searchUserIdFromRemote(loginId)
-        .then(response => {
-          let remoteServer = {
-            name: targetServer.name,
-            loginId: loginId
-          }
-          this.employee.idExistingServers
-          && this.employee.idExistingServers.push(remoteServer)
-        })
-        .catch(error => {
-          // Fallback search using email
-          //
-          // There is reason for this fallback action. Neither default suspected oss id
-          // nor email match exactly all the time to find oss user.
-          // So two way check is more reliable.
-          targetServer.findUserByEmail(this.employee.mail)
-            .then(response => {
-              if (response.data && response.data.items.length > 0) {
-                this.employee.idExistingServers &&
-                this.employee.idExistingServers.push({
-                  name: targetServer.name,
-                  loginId: response.data.items[0].login
-                })
-              }
-            })
-            .catch(error => {
-              console.log('Not found')
-            })
-          return
-        })
-    })
-  }
-
-  render() {
-    return (
-      <Observer render={() => (
-        <EmployeeView
-          employee={this.employee}
-          handleClick={this.handleClick}
-          onKeyDown={this.props.onKeyDown}
-        />
-      )} />
-    )
-  }
-}
-
-export default Employee
+const Contents = styled.div`
+  display: flex;
+  padding: 2px;
+`

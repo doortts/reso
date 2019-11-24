@@ -1,5 +1,5 @@
 import React from 'react'
-import { IServer } from './Employee'
+import { IServer } from './EmployeeContainer'
 import { useObserver } from 'mobx-react-lite'
 
 interface Props {

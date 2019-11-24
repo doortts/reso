@@ -1,68 +1,89 @@
-import React, { useRef } from 'react'
-import { useStore } from '../../context'
-import { IEmployee } from './Employee'
-import { makeStyles, Theme } from '@material-ui/core'
-import { observer, useObserver } from 'mobx-react-lite'
+// react-unstable-attributes.d.ts
 import Avatar from '@material-ui/core/Avatar'
-import StarTwoToneIcon from '@material-ui/icons/StarTwoTone'
-import styled from 'styled-components'
-import { Item } from './Item'
+import React from 'react'
+import { IEmployee, IServer } from './EmployeeContainer'
+import ServerNames from './ServerNames'
+import { ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from '@material-ui/core'
+import Starred from '../../Starred'
+
+declare module 'react' {
+  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
+    loading?: 'auto' | 'eager' | 'lazy';
+  }
+}
 
 interface Props {
   employee: IEmployee
-  handleClick: (e: React.MouseEvent<HTMLElement>) => void
-  onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => void
 }
 
-export const EmployeeView: React.FC<Props> = observer<Props>(props => {
-  const { employee, handleClick, onKeyDown } = props
+const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
+}
 
-  let isSelected = { backgroundColor: 'white' }
-
-  const store = useStore()
-  const ref = useRef<HTMLLIElement>(null)
-
-  // TODO: Move to store
-  if (store.selectedEmployeeIndex >= 0 && store.employees[store.selectedEmployeeIndex].mail === employee.mail) {
-    isSelected = { backgroundColor: 'lightgrey' }
-    ref.current && ref.current.focus()
-  }
+export const EmployeeView: React.FC<Props> = React.memo(({employee}) => {
+  const classes = useStyles()
+  const { displayName, photoUrl, idExistingServers, department, mail } = employee
 
   return (
-    <ListItem
-      onClick={handleClick}
-      onKeyDown={onKeyDown}
-      style={isSelected}
-      tabIndex={-1}
-      ref={ref}
-    >
-      <Layout>
-        <Item
-          department={employee.department}
-          displayName={employee.displayName}
-          idExistingServers={employee.idExistingServers}
-          mail={employee.mail}
-          photoUrl={employee.photoUrl}
-        />
-      </Layout>
-    </ListItem>
+    <React.Fragment>
+      <ListItemAvatar>
+        <Avatar>
+          <img
+            src={photoUrl}
+            width="40px"
+            onError={addDefaultSrc}
+            loading="lazy"
+            alt="Employee photo"
+          />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText
+        disableTypography
+        primary={
+          <>
+            <Typography
+              variant="inherit"
+              className={classes.listItePrimaryText}
+            >
+              <span>{displayName}</span>
+              <ServerNames idExistingServers={idExistingServers} />
+            </Typography>
+          </>
+        }
+        secondary={
+          <div className={classes.listItemText}>
+            <Typography
+              className={classes.listIteSecondaryText}
+              color="textSecondary"
+              variant="inherit"
+              noWrap
+            >
+              {department}, {mail}
+            </Typography>
+          </div>
+        } />
+      <Starred />
+    </React.Fragment>
   )
 })
 
-const ListItem = styled.li`
-  padding: 3px;
-  &:active {
-    outline:solid 0px #DCDCDC;
-    background-color: #ECECEC;
+const useStyles = makeStyles((theme: Theme) => ({
+  listItem: {
+    padding: theme.spacing(0),
+    paddingLeft: theme.spacing(1),
+    color: theme.palette.text.primary,
+  },
+  listItePrimaryText: {
+    fontSize: '14px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  listIteSecondaryText: {
+    fontSize: '11px'
+  },
+  listItemText: {
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
-`
-
-const Layout = styled.div`
-  display: flex;
-  padding: 2px;
-`
-
-const Summary = styled.div`
-    width: 100%
-`
-
+}))
