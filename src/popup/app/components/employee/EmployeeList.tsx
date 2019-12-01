@@ -2,15 +2,9 @@ import React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
 import EmployeeContainer, { IEmployee } from './EmployeeContainer'
-import { GithubServer } from '../../models/GithubServer'
 import { useStore } from '../../context'
 
-interface Props {
-  employees: Array<IEmployee>
-  githubServers: Array<GithubServer>
-}
-
-export const EmployeeList: (props: Props) => JSX.Element[] = React.memo((props: Props) => {
+export const EmployeeList = React.memo( (props: any) => {
   const {employees, githubServers} = props
 
   const store = useStore()
