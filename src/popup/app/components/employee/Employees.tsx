@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const Employees: React.FC<Props> = React.memo(props => {
+const Employees: React.FC<Props> = React.memo(props => {
   const classes = useStyles()
 
   const store: Store = React.useContext(storeContext) || new Store()
