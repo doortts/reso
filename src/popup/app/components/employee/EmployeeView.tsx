@@ -1,9 +1,11 @@
 // react-unstable-attributes.d.ts
-import Avatar from '@material-ui/core/Avatar'
 import React from 'react'
-import { IEmployee, IServer } from './EmployeeContainer'
-import ServerNames from './ServerNames'
+import Avatar from '@material-ui/core/Avatar'
 import { ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from '@material-ui/core'
+import styled from 'styled-components'
+
+import { IEmployee } from './EmployeeContainer'
+import ServerNames from './ServerNames'
 import Starred from '../../Starred'
 
 declare module 'react' {
@@ -20,12 +22,12 @@ const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
 }
 
-export const EmployeeView: React.FC<Props> = React.memo(({employee}) => {
+export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
   const classes = useStyles()
   const { displayName, photoUrl, idExistingServers, department, mail } = employee
 
   return (
-    <React.Fragment>
+    <Contents>
       <ListItemAvatar>
         <Avatar>
           <img
@@ -63,7 +65,7 @@ export const EmployeeView: React.FC<Props> = React.memo(({employee}) => {
           </div>
         } />
       <Starred />
-    </React.Fragment>
+    </Contents>
   )
 })
 
@@ -87,3 +89,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis'
   }
 }))
+
+const Contents = styled.div`
+  display: flex;
+  padding: 2px;
+`

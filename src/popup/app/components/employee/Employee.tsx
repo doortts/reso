@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
-import { useStore } from '../../context'
-import { IEmployee } from './EmployeeContainer'
+import React from 'react'
 import { makeStyles, Theme } from '@material-ui/core'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
+
+import { useStore } from '../../context'
+import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
 import ListItem from '@material-ui/core/ListItem'
 
@@ -47,9 +47,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       tabIndex={-1}
       autoFocus={isSelected}
     >
-      <Contents>
-        <EmployeeView employee={employee} />
-      </Contents>
+      <EmployeeView employee={employee} />
     </ListItem>
   )
 })
@@ -74,8 +72,3 @@ const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis'
   }
 }))
-
-const Contents = styled.div`
-  display: flex;
-  padding: 2px;
-`
