@@ -9,7 +9,7 @@ interface Props {
 export const ServerNames: React.FC<Props> = React.memo(({idExistingServers}) => {
   return useObserver(() =>(
     <div>
-      {idExistingServers && idExistingServers.map(server => (
+      {idExistingServers?.map(server => (
         <span style={getBadgeStyle(server.name)} key={server.name}>{server.name}</span>
       ))}
     </div>
@@ -26,7 +26,7 @@ const getBadgeStyle = (serverName: string) => {
     padding: '0 4px 1px 4px',
     marginLeft: '3px'
   }
-  if (serverName && serverName.toLowerCase() === 'es') {
+  if (serverName?.toLowerCase() === 'es') {
     badge.backgroundColor = '#ff721c'
   } else {
     badge.backgroundColor = '#555555'

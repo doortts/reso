@@ -46,7 +46,7 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
   }
 
   handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    this.employee.idExistingServers && this.employee.idExistingServers.map(server => console.log(server.name, server.loginId))
+    this.employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
   }
 
   guessDefaultLoginId = (email: string) => {
@@ -64,8 +64,7 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
             name: targetServer.name,
             loginId: loginId
           }
-          this.employee.idExistingServers
-          && this.employee.idExistingServers.push(remoteServer)
+          this.employee.idExistingServers?.push(remoteServer)
         })
         .catch(error => {
           // Fallback search using email
@@ -75,9 +74,8 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
           // So two way check is more reliable.
           targetServer.findUserByEmail(this.employee.mail)
             .then(response => {
-              if (response.data && response.data.items.length > 0) {
-                this.employee.idExistingServers &&
-                this.employee.idExistingServers.push({
+              if (response.data?.items.length > 0) {
+                this.employee.idExistingServers?.push({
                   name: targetServer.name,
                   loginId: response.data.items[0].login
                 })

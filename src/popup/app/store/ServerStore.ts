@@ -36,7 +36,7 @@ export class ServerStore {
       .then(response => {
         switch (response.status) {
           case 200:
-            user.idExistingServers && user.idExistingServers.push({
+            user.idExistingServers?.push({
               name: server.name,
               loginId: targetId
             })
@@ -51,10 +51,10 @@ export class ServerStore {
 
             server.findUserByEmail(user.mail)
             .then(response => {
-              if (response.data && response.data.items.length > 0) {
+              if (response.data?.items.length > 0) {
                 user.displayName += server.name
                 console.log(user.displayName)
-                user.idExistingServers && user.idExistingServers.push({
+                user.idExistingServers?.push({
                   name: server.name,
                   loginId: response.data.items[0].login
                 })

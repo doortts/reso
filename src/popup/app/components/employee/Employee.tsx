@@ -33,7 +33,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
         store.decreaseSelectedEmployeeIndex()
         break
       case 'Enter':
-        employee.idExistingServers && employee.idExistingServers.map(server => console.log(server.name, server.loginId))
+        employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
         break
       case 'F':
       case 'f':
