@@ -16,7 +16,7 @@ interface Props {
 export const Employee: React.FC<Props> = observer<Props>(props => {
   const { employee, handleClick, isSelected } = props
 
-  let selectedStyle = isSelected ? { backgroundColor: 'lightgray' } : { backgroundColor: 'white' }
+  let focusStyle = isSelected ? selectedStyle(employee.photoUrl) : {}
 
   const store = useStore()
   const classes = useStyles()
@@ -32,7 +32,16 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       case 'ArrowUp':
         store.decreaseSelectedEmployeeIndex()
         break
+      case 'Enter':
+        employee.idExistingServers && employee.idExistingServers.map(server => console.log(server.name, server.loginId))
+        break
+      case 'F':
+      case 'f':
+      case 'ㄹ':
+        console.log('FU')
+        break
       default:
+        console.log(e.key)
         break
     }
   }
@@ -43,7 +52,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       onClick={handleClick}
       className={classes.listItem}
       onKeyDown={handleKeyDown}
-      style={selectedStyle}
+      style={focusStyle}
       tabIndex={-1}
       autoFocus={isSelected}
     >
@@ -52,23 +61,25 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   )
 })
 
+const selectedStyle = (photoUrl: string | undefined = ""): any => ({
+  backgroundColor: '#fafafa',
+  backgroundImage: `url("${photoUrl}")`,
+  backgroundBlendMode: 'multiply',
+  backgroundPosition: 'center center',
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'cover',
+  boxShadow: '#444444 1px 1px 1px 0px',
+  boxSizing: 'border-box',
+})
+
 const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
     padding: theme.spacing(0),
-    paddingLeft: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-  listItePrimaryText: {
-    fontSize: '14px',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  listIteSecondaryText: {
-    fontSize: '11px'
-  },
-  listItemText: {
-    width: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    boxSizing: 'border-box',
+    borderRadius: '3px',
+    '&:focus': {
+      outline: 'none'
+    },
+    marginTop: '3px'
   }
 }))

@@ -32,7 +32,6 @@ interface Props {
 }
 
 export class EmployeeContainer extends React.PureComponent<Props, {}> {
-
   constructor(props: Props) {
     super(props)
     this.doesUserExist()

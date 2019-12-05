@@ -27,9 +27,9 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
   const { displayName, photoUrl, idExistingServers, department, mail } = employee
 
   return (
-    <Contents>
-      <ListItemAvatar>
-        <Avatar>
+    <ContentLayout>
+      <ListItemAvatar className={classes.listItemAvatar}>
+        <Avatar className={classes.Avatar}>
           <img
             src={photoUrl}
             width="40px"
@@ -45,7 +45,7 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
           <>
             <Typography
               variant="inherit"
-              className={classes.listItePrimaryText}
+              className={classes.listItemPrimaryText}
             >
               <span>{displayName}</span>
               <ServerNames idExistingServers={idExistingServers} />
@@ -55,7 +55,7 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
         secondary={
           <div className={classes.listItemText}>
             <Typography
-              className={classes.listIteSecondaryText}
+              className={classes.listItemSecondaryText}
               color="textSecondary"
               variant="inherit"
               noWrap
@@ -65,23 +65,27 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
           </div>
         } />
       <Starred />
-    </Contents>
+    </ContentLayout>
   )
 })
 
 const useStyles = makeStyles((theme: Theme) => ({
-  listItem: {
-    padding: theme.spacing(0),
-    paddingLeft: theme.spacing(1),
-    color: theme.palette.text.primary,
+  listItemAvatar: {
+    minWidth: '46px',
+    paddingLeft: '5px'
   },
-  listItePrimaryText: {
+  Avatar: {
+    border: '1px solid #f1f1f1'
+  },
+  listItemPrimaryText: {
     fontSize: '14px',
+    fontWeight: 600,
     display: 'flex',
     alignItems: 'center'
   },
-  listIteSecondaryText: {
-    fontSize: '11px'
+  listItemSecondaryText: {
+    fontSize: '11px',
+    color: 'inherit'
   },
   listItemText: {
     width: '100%',
@@ -90,7 +94,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const Contents = styled.div`
+const ContentLayout = styled.div`
+  width: 100%;
   display: flex;
-  padding: 2px;
+  justify-content: space-between;
+  backdrop-filter: blur(30px);
+  border-radius: 3px;
+  padding-top: 3px;
 `
