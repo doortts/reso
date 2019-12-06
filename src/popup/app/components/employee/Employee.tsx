@@ -62,13 +62,13 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
 })
 
 const selectedStyle = (photoUrl: string | undefined = ""): any => ({
-  backgroundColor: '#fafafa',
+  backgroundColor: '#f1f1f1',
   backgroundImage: `url("${photoUrl}")`,
   backgroundBlendMode: 'multiply',
   backgroundPosition: 'center center',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
-  boxShadow: '#444444 1px 1px 1px 0px',
+  boxShadow: '#444444 1px 1px 2px 0px',
   boxSizing: 'border-box',
 })
 
@@ -80,6 +80,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:focus': {
       outline: 'none'
     },
-    marginTop: '3px'
+    marginTop: '2px'
   }
 }))

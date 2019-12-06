@@ -72,7 +72,8 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
 const useStyles = makeStyles((theme: Theme) => ({
   listItemAvatar: {
     minWidth: '46px',
-    paddingLeft: '5px'
+    paddingLeft: '5px',
+    paddingBottom: '2px'
   },
   Avatar: {
     border: '1px solid #f1f1f1'
@@ -98,7 +99,8 @@ const ContentLayout = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  backdrop-filter: blur(30px);
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
   border-radius: 3px;
   padding-top: 3px;
 `
