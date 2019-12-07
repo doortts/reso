@@ -25,7 +25,7 @@ const envCall = axios.create({
 
 export class Store {
   @observable employees: Array<IEmployee> = []
-  @observable state = "Ready" // "pending" / "done" / "error"
+  @observable state = 'Ready' // "pending" / "done" / "error"
   @observable githubServers: Array<GithubServer> = []
   @observable selectedEmployeeIndex = 0
 
@@ -40,12 +40,12 @@ export class Store {
       ENV: {}
     }, (local: any) => {
       if (!local.ENV.LDAP_SERVER) {
-        this.loadEnvFromRemote(env, this.init);
+        this.loadEnvFromRemote(env, this.init)
       } else {
-        Object.assign(this.env, local.ENV);
-        this.loadEnvFromRemote(env, this.init);
+        Object.assign(this.env, local.ENV)
+        this.loadEnvFromRemote(env, this.init)
       }
-    });
+    })
   }
 
   findUserPhotoByEmail = (email: string) => {
@@ -58,18 +58,18 @@ export class Store {
   loadEnvFromRemote = (env: IEnv, callback: Function) => {
     envCall.get('/').then(function (response) {
       if (response.status === 200) {
-        Object.assign(env, response.data);
+        Object.assign(env, response.data)
         storage.set({
           ENV: env
-        });
+        })
         callback()
       }
-    });
+    })
   }
 
   isRequiredToHide(user: any) {
-    let toSkipDepartment = ["업무지원"];
-    return toSkipDepartment.indexOf(user.department) !== -1;
+    let toSkipDepartment = ['업무지원']
+    return toSkipDepartment.indexOf(user.department) !== -1
   }
 
   @action
@@ -82,7 +82,7 @@ export class Store {
       method: 'GET',
       url: `${this.env.LDAP_SERVER}/api/users/search?q=*${query}*&searchFields=displayName`,
       headers: {
-        "Content-Type": "text/plain"
+        'Content-Type': 'text/plain'
       }
     })
   }
@@ -92,24 +92,24 @@ export class Store {
     this.state = 'Searching..'
     this.findEmployees(query).then(response => {
       if (!response.data._embedded) {
-        return;
+        return
       }
 
       let found: Array<IEmployee> = []
-      let foundCount = 0;
-      let total = response.data._embedded.users.length;
+      let foundCount = 0
+      let total = response.data._embedded.users.length
 
       response.data._embedded.users.map((user: IEmployee) => {
         if (this.isRequiredToHide(user)) {
           foundCount++
-          return;
+          return
         }
         found.push(user)
 
         this.findUserPhotoByEmail(user.mail).then(response => {
           foundCount++
           if (response.status === 200) {
-            user.photoUrl = response.data.photoUrl;
+            user.photoUrl = response.data.photoUrl
           } else {
             this.sendErrorLog(response)
           }
@@ -130,8 +130,8 @@ export class Store {
       method: 'POST',
       url: `${this.env.LOG_SERVER}`,
       data: {
-        projectName: "mgkick",
-        projectVersion: "2.0.0",
+        projectName: 'mgkick',
+        projectVersion: '2.0.0',
         body: [...errors]
       }
     })
@@ -168,10 +168,11 @@ export class Store {
     }
   }
 
+  getSelectedEmployee = (): IEmployee => this.employees[this.selectedEmployeeIndex]
 }
 
 export const createStore = (): Store => {
   return new Store()
-};
+}
 
 export type TStore = ReturnType<typeof createStore>

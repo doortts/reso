@@ -4,26 +4,23 @@ import { useObserver } from 'mobx-react-lite'
 import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 import { useStore } from '../../context'
 
-export const EmployeeList = React.memo( (props: any) => {
-  const {employees, githubServers} = props
-
+export const EmployeeList = React.memo((): any => {
   const store = useStore()
 
-  console.log('EmployeeList render')
-  return useObserver( () => (
-    employees.map((employee: IEmployee) => {
-      let isSelected = false
+  return useObserver(() => (
+    store.employees.map((employee: IEmployee) => {
+        let isSelected = false
 
-      // TODO: Move to store
-      if (store.selectedEmployeeIndex >= 0 && store.employees[store.selectedEmployeeIndex].mail === employee.mail) {
-        isSelected = true
-      }
+        // TODO: Move to store
+        if (store.selectedEmployeeIndex >= 0 && store.employees[store.selectedEmployeeIndex].mail === employee.mail) {
+          isSelected = true
+        }
 
-      return (
+        return (
           <EmployeeContainer
             key={employee.uid}
             employee={employee}
-            servers={githubServers}
+            servers={store.githubServers}
             isSelected={isSelected}
           />
         )

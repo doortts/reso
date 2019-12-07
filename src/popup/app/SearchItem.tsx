@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, InputBase } from '@material-ui/core'
+import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
+import SearchIcon from '@material-ui/icons/Search'
 
 import { Store } from './store/Store'
 import { storeContext } from './context'
@@ -10,7 +10,7 @@ interface Props {
   keyword?: string
 }
 
-export const SearchItem: React.FC<Props> = props => {
+export const SearchItem = () => {
   const classes = useStyles()
   const store = React.useContext(storeContext) || new Store()
   const [keywords, setKeywords] = useState("")
@@ -23,7 +23,7 @@ export const SearchItem: React.FC<Props> = props => {
     store.getEmployees(keywords)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
       handleClick()
@@ -43,55 +43,96 @@ export const SearchItem: React.FC<Props> = props => {
       default:
         break
     }
-
   }
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <TextField
-        id="standard-name"
-        placeholder="Type keywords"
-        className={classes.textField}
-        value={keywords}
-        onChange={handleChange}
-        onKeyDown={handleKeyPress}
-        margin="dense"
-        autoFocus
-      />
-      <Button
-        variant="outlined"
-        size="small"
-        color="primary"
-        className={classes.margin}
-        onClick={() => { handleClick() }}
-      >
-        Search
-      </Button>
-      <div>{keywords}</div>
-    </form>
+    <React.Fragment>
+      <div className={classes.search}>
+        <InputBase
+          placeholder="Type keywords…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ 'aria-label': 'search' }}
+          value={keywords}
+          onKeyDown={handleKeyPress}
+          onChange={handleChange}
+        />
+        <Button
+          size="small"
+          color="primary"
+          className={classes.margin}
+          onClick={ handleClick }
+        >
+          <div className={classes.searchIcon}>
+            Search<SearchIcon />
+          </div>
+        </Button>
+      </div>
+    </React.Fragment>
   )
 }
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginTop: '2px'
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  button: {
-    margin: theme.spacing(1),
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
-}));
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+      },
+    },
+    searchIcon: {
+      width: theme.spacing(7),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputRoot: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 2),
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: 200,
+        '&:focus': {
+          width: 200,
+        },
+      },
+    },
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      marginTop: '2px'
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
+    button: {
+      margin: theme.spacing(1),
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+    menu: {
+      width: 200,
+    }
+  }),
+)
 
 export default SearchItem
