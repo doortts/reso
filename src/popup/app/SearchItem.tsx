@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'
 import { Button, InputBase } from '@material-ui/core'
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
@@ -6,14 +6,12 @@ import SearchIcon from '@material-ui/icons/Search'
 import { Store } from './store/Store'
 import { storeContext } from './context'
 
-interface Props {
-  keyword?: string
-}
-
 export const SearchItem = () => {
   const classes = useStyles()
   const store = React.useContext(storeContext) || new Store()
   const [keywords, setKeywords] = useState("")
+
+  store.inputRef = useRef()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value)
@@ -45,6 +43,10 @@ export const SearchItem = () => {
     }
   }
 
+  useEffect(() => {
+    store.inputRef?.current.focus()
+  }, [])
+
   return (
     <React.Fragment>
       <div className={classes.search}>
@@ -54,10 +56,10 @@ export const SearchItem = () => {
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search' }}
           value={keywords}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
+          inputRef={store.inputRef}
         />
         <Button
           size="small"

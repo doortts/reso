@@ -38,7 +38,8 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       case 'F':
       case 'f':
       case 'ㄹ':
-        console.log('FU')
+        store.focusInput()
+        console.log('F')
         break
       default:
         console.log(e.key)

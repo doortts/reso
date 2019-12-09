@@ -28,6 +28,7 @@ export class Store {
   @observable state = 'Ready' // "pending" / "done" / "error"
   @observable githubServers: Array<GithubServer> = []
   @observable selectedEmployeeIndex = 0
+  @observable inputRef: any
 
   env: IEnv = {} as any
 
@@ -163,12 +164,26 @@ export class Store {
 
   @action
   decreaseSelectedEmployeeIndex = () => {
-    if (this.selectedEmployeeIndex > 0) {
+    if (this.selectedEmployeeIndex === 0) {
+      this.focusInput()
+    }
+
+    if (this.selectedEmployeeIndex >= 0) {
       this.selectedEmployeeIndex--
     }
   }
 
-  getSelectedEmployee = (): IEmployee => this.employees[this.selectedEmployeeIndex]
+  focusInput = () => this.inputRef?.current.focus()
+
+  getSelectedEmployee = (): IEmployee | undefined => {
+    if (this.selectedEmployeeIndex < 0) {
+      return undefined
+    } else {
+      return this.employees[this.selectedEmployeeIndex]
+    }
+  }
+
+  resetCurrentSelect = () => this.selectedEmployeeIndex = 0
 }
 
 export const createStore = (): Store => {

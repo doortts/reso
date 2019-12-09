@@ -16,6 +16,9 @@ const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
 export const EmployeeDetail = () => {
   const store = useStore()
 
+  const handleClick = () => {
+    store.inputRef?.current?.focus()
+  }
 
   return useObserver(() => {
       let employee = store.getSelectedEmployee()
@@ -40,6 +43,7 @@ export const EmployeeDetail = () => {
           <div>{employeeNumber}</div>
           <div>{department} </div>
           <div>{mail}</div>
+          <div><button onClick={handleClick} >click</button></div>
         </div>
       )
     }
