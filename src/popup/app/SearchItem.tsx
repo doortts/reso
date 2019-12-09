@@ -30,10 +30,12 @@ export const SearchItem = () => {
     switch (e.key) {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
+        e.preventDefault()
         store.increaseSelectedEmployeeIndex()
         break
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
+        e.preventDefault()
         store.decreaseSelectedEmployeeIndex()
         break
       default:
