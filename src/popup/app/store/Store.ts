@@ -78,7 +78,7 @@ export class Store {
     this.employees = employees
   }
 
-  findEmployees = (query: string) => {
+  findEmployeesFromRemote = (query: string) => {
     return axios({
       method: 'GET',
       url: `${this.env.LDAP_SERVER}/api/users/search?q=*${query}*&searchFields=displayName`,
@@ -89,9 +89,12 @@ export class Store {
   }
 
   @action
-  getEmployees = (query: string) => {
+  findEmployees = (query: string) => {
     this.state = 'Searching..'
-    this.findEmployees(query).then(response => {
+    this.resetCurrentSelect()
+    this.setEmployees([])
+
+    this.findEmployeesFromRemote(query).then(response => {
       if (!response.data._embedded) {
         return
       }

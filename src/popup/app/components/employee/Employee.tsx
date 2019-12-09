@@ -62,7 +62,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   )
 })
 
-const selectedStyle = (photoUrl: string | undefined = ""): any => ({
+const selectedStyle = (photoUrl: string | undefined = ''): any => ({
   backgroundColor: '#f1f1f1',
   backgroundImage: `url("${photoUrl}")`,
   backgroundBlendMode: 'multiply',

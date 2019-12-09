@@ -9,7 +9,7 @@ import { storeContext } from './context'
 export const SearchItem = () => {
   const classes = useStyles()
   const store = React.useContext(storeContext) || new Store()
-  const [keywords, setKeywords] = useState("")
+  const [keywords, setKeywords] = useState('')
 
   store.inputRef = useRef()
 
@@ -17,26 +17,24 @@ export const SearchItem = () => {
     setKeywords(e.target.value)
   }
 
-  const handleClick = () => {
-    store.getEmployees(keywords)
+  const handleSearchClick = () => {
+    store.findEmployees(keywords)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      handleClick()
+      handleSearchClick()
     }
 
     switch (e.key) {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
         store.increaseSelectedEmployeeIndex()
-        console.log(store.selectedEmployeeIndex)
         break
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
         store.decreaseSelectedEmployeeIndex()
-        console.log(store.selectedEmployeeIndex)
         break
       default:
         break
@@ -57,7 +55,7 @@ export const SearchItem = () => {
             input: classes.inputInput,
           }}
           value={keywords}
-          onKeyDown={handleKeyPress}
+          onKeyDown={handleKeyDown}
           onChange={handleChange}
           inputRef={store.inputRef}
         />
@@ -65,7 +63,7 @@ export const SearchItem = () => {
           size="small"
           color="primary"
           className={classes.margin}
-          onClick={ handleClick }
+          onClick={handleSearchClick}
         >
           <div className={classes.searchIcon}>
             Search<SearchIcon />
