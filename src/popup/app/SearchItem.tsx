@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Button, InputBase } from '@material-ui/core'
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
+import { useHistory } from "react-router-dom";
 
 import { Store } from './store/Store'
 import { storeContext } from './context'
 
 export const SearchItem = () => {
   const classes = useStyles()
+  let history = useHistory();
   const store = React.useContext(storeContext) || new Store()
   const [keywords, setKeywords] = useState('')
 
@@ -17,14 +19,15 @@ export const SearchItem = () => {
     setKeywords(e.target.value)
   }
 
-  const handleSearchClick = () => {
+  const handleSearch = () => {
+    history.push('/')
     store.findEmployees(keywords)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      handleSearchClick()
+      handleSearch()
     }
 
     switch (e.key) {
@@ -65,7 +68,7 @@ export const SearchItem = () => {
           size="small"
           color="primary"
           className={classes.margin}
-          onClick={handleSearchClick}
+          onClick={handleSearch}
         >
           <div className={classes.searchIcon}>
             Search<SearchIcon />
