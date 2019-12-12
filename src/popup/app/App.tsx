@@ -1,10 +1,14 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
-import { Fab, useScrollTrigger, Zoom } from '@material-ui/core'
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { Grid, AppBar, Toolbar, Fab, useScrollTrigger, Zoom, IconButton } from '@material-ui/core'
+import { KeyboardArrowUp, Settings } from '@material-ui/icons'
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom'
 
 import StoreProvider from './context'
 import SearchItem from './SearchItem'
@@ -13,6 +17,7 @@ import ShortcutLinks from './ShortcutLinks'
 import Employees from './components/employee/Employees'
 import ResetCss from './global-styles/css-reset'
 import Scrollbar from './global-styles/scrollbar'
+import SettingPage from './components/settings/SettingPage'
 
 interface Props {
   /**
@@ -30,6 +35,12 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: theme.spacing(2),
       right: theme.spacing(2),
     },
+    AppBar: {
+      backgroundColor: '#1976d2'
+    },
+    Toolbar: {
+      justifyContent: 'space-between'
+    }
   }),
 )
 
@@ -85,28 +96,42 @@ const App = () => {
 
   return (
     <StoreProvider>
-      <ElevationScroll>
-        <AppBar>
-          <Toolbar>
-            <SearchItem />
-          </Toolbar>
-        </AppBar>
-      </ElevationScroll>
-      <Toolbar id="back-to-top-anchor" />
-      <div style={{ padding: 5 }}>
-        <HelpMessage />
-        <ShortcutLinks />
-        <Grid container justify="center" spacing={1}>
-          <Employees />
-        </Grid>
-      </div>
-      <ResetCss />
-      <Scrollbar />
-      <ScrollTop>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
+      <Router>
+        <ElevationScroll>
+          <AppBar className={classes.AppBar}>
+            <Toolbar className={classes.Toolbar}>
+              <SearchItem />
+              <Link to="/settings">
+                <IconButton aria-label="display more actions" edge="end">
+                  <Settings />
+                </IconButton>
+              </Link>
+            </Toolbar>
+          </AppBar>
+        </ElevationScroll>
+        <Toolbar id="back-to-top-anchor" />
+        <Switch>
+          <Route path="/settings">
+            <SettingPage />
+          </Route>
+          <Route path="/">
+            <div style={{ padding: 5 }}>
+              <HelpMessage />
+              <ShortcutLinks />
+              <Grid container justify="center" spacing={1}>
+                <Employees />
+              </Grid>
+            </div>
+            <ResetCss />
+            <Scrollbar />
+            <ScrollTop>
+              <Fab color="secondary" size="small" aria-label="scroll back to top">
+                <KeyboardArrowUp />
+              </Fab>
+            </ScrollTop>
+          </Route>
+        </Switch>
+      </Router>
     </StoreProvider>
   )
 }

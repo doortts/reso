@@ -56,6 +56,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       style={focusStyle}
       tabIndex={-1}
       autoFocus={isSelected}
+      button
     >
       <EmployeeView employee={employee} />
     </ListItem>
