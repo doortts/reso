@@ -26,11 +26,11 @@ export const EmployeeDetail = () => {
         return (<div></div>)
       }
       console.log('selected employee', employee?.displayName)
-      const { employeeNumber, displayName, photoUrl, department, mail } = employee
+      const { company, employeeNumber, displayName, photoUrl, department, mail } = employee
 
       return (
         <div style={{ position: 'sticky', top: '70px' }}>
-          <div>Detail</div>
+          <div><h1>Detail</h1></div>
           <div>
             <img
               src={photoUrl}
@@ -39,6 +39,7 @@ export const EmployeeDetail = () => {
               alt="Employee photo"
             />
           </div>
+          <div>{company} </div>
           <div>{displayName} </div>
           <div>{employeeNumber}</div>
           <div>{department} </div>
