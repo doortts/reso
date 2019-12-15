@@ -23,7 +23,7 @@ const envCall = axios.create({
   timeout: 1000
 })
 
-export class Store {
+export class EmployeeStore {
   @observable employees: Array<IEmployee> = []
   @observable state = 'Ready' // "pending" / "done" / "error"
   @observable githubServers: Array<GithubServer> = []
@@ -189,8 +189,8 @@ export class Store {
   resetCurrentSelect = () => this.selectedEmployeeIndex = 0
 }
 
-export const createStore = (): Store => {
-  return new Store()
+export const createStore = (): EmployeeStore => {
+  return new EmployeeStore()
 }
 
 export type TStore = ReturnType<typeof createStore>

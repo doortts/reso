@@ -1,6 +1,6 @@
 import {observable, action, computed} from 'mobx'
 
-import {IEnv} from './Store'
+import {IEnv} from './EmployeeStore'
 import {GithubServer, IRemoteServer} from '../models/GithubServer'
 import {IEmployee} from '../components/employee/EmployeeContainer'
 
