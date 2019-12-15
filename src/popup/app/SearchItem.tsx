@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import { EmployeeStore } from './store/EmployeeStore'
 import { storeContext } from './context'
 
+let imeUpdating = false
+
 export const SearchItem = () => {
   const classes = useStyles()
   let history = useHistory();
@@ -24,13 +26,22 @@ export const SearchItem = () => {
     store.findEmployees(keywords)
   }
 
+  const handleCompositionUpdate = (e: React.CompositionEvent<HTMLInputElement>) => {
+    imeUpdating = true
+  }
+
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    imeUpdating = false
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSearch()
-    }
+    if(imeUpdating) return
 
     switch (e.key) {
+      case 'Enter':
+        e.preventDefault()
+        handleSearch()
+        break
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
         e.preventDefault()
@@ -61,6 +72,8 @@ export const SearchItem = () => {
           }}
           value={keywords}
           onKeyDown={handleKeyDown}
+          onCompositionUpdate={handleCompositionUpdate}
+          onCompositionEnd={handleCompositionEnd}
           onChange={handleChange}
           inputRef={store.inputRef}
         />
