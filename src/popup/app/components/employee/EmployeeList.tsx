@@ -7,6 +7,11 @@ import { useStore } from '../../context'
 export const EmployeeList = React.memo((): any => {
   const store = useStore()
 
+  if (store.firstRun) {
+    store.firstRun = false
+    store.employees = store.favoriteEmployees
+  }
+
   return useObserver(() => (
     store.employees.map((employee: IEmployee) => {
       let isSelected = false

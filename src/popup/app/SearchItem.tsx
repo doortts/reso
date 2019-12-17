@@ -97,9 +97,14 @@ const useStyles = makeStyles((theme: Theme) =>
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
+      boxSizing: 'border-box',
+      border: '2px solid #1976d2',
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      '&:focus-within': {
+        border: '2px solid #3f51b5',
       },
       marginLeft: 0,
       [theme.breakpoints.up('sm')]: {

@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, reaction, toJS } from 'mobx'
 import axios from 'axios'
 
 import { IEmployee } from '../components/employee/EmployeeContainer'
@@ -29,6 +29,17 @@ export class EmployeeStore {
   @observable githubServers: Array<GithubServer> = []
   @observable selectedEmployeeIndex = 0
   @observable inputRef: any
+  @observable favoriteEmployees: Array<IEmployee> = []
+  firstRun: boolean = true
+
+  syncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
+    console.log('[reaction] sync favoriteEmployees: ' + this.favoriteEmployees.length)
+    for (const emp of this.favoriteEmployees) {
+      console.log(emp.employeeNumber)
+    }
+
+    storage.set({ starredUsers: toJS(this.favoriteEmployees) })
+  })
 
   env: IEnv = {} as any
 
@@ -38,8 +49,10 @@ export class EmployeeStore {
 
   loadEnv = (env: IEnv) => {
     storage.get({
-      ENV: {}
+      ENV: {},
+      starredUsers: []
     }, (local: any) => {
+      this.favoriteEmployees = local.starredUsers
       if (!local.ENV.LDAP_SERVER) {
         this.loadEnvFromRemote(env, this.init)
       } else {
@@ -96,6 +109,7 @@ export class EmployeeStore {
 
     this.findEmployeesFromRemote(query).then(response => {
       if (!response.data._embedded) {
+        this.state = 'Not found!'
         return
       }
 
@@ -108,6 +122,11 @@ export class EmployeeStore {
           foundCount++
           return
         }
+
+        if(this.isFavoredEmployee(user)){
+          user.favorite = true
+        }
+
         found.push(user)
 
         this.findUserPhotoByEmail(user.mail).then(response => {
@@ -179,7 +198,7 @@ export class EmployeeStore {
   focusInput = () => this.inputRef?.current.focus()
 
   getSelectedEmployee = (): IEmployee | undefined => {
-    if (this.selectedEmployeeIndex < 0) {
+    if (this.selectedEmployeeIndex < 0 || this.employees.length === 0) {
       return undefined
     } else {
       return this.employees[this.selectedEmployeeIndex]
@@ -187,6 +206,26 @@ export class EmployeeStore {
   }
 
   resetCurrentSelect = () => this.selectedEmployeeIndex = 0
+
+  addToFavoriteEmployees = (target: IEmployee) => {
+    const found = this.favoriteEmployees.find(
+      (employee: IEmployee) => employee.employeeNumber === target.employeeNumber
+    )
+
+    if (!found) {
+      this.favoriteEmployees.unshift(target)
+    }
+  }
+
+  removeFromFavoriteEmployees = (target: IEmployee) => {
+    this.favoriteEmployees = this.favoriteEmployees.filter(
+      (employee: IEmployee) => employee.employeeNumber !== target.employeeNumber
+    )
+  }
+
+  isFavoredEmployee = (target: IEmployee) => this.favoriteEmployees.find(
+    employee => target.employeeNumber === employee.employeeNumber
+  )
 }
 
 export const createStore = (): EmployeeStore => {

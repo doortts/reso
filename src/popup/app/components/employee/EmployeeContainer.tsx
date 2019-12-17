@@ -22,6 +22,7 @@ export interface IEmployee {
   telephoneNumber: string
   photoUrl?: string
   idExistingServers: Array<IServer>
+  favorite?: boolean
 }
 
 interface Props {

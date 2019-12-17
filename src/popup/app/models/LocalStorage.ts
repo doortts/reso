@@ -9,7 +9,12 @@ export class LocalStorage {
     if (!chrome.storage) {
       let results = {} as any
       Object.keys(item).map(key => {
-        results[key] = localStorage.getItem(key) || {}
+        let defaultValue = '{}'
+
+        if (Array.isArray(item[key])) {
+          defaultValue = '[]'
+        }
+        results[key] = JSON.parse(localStorage.getItem(key) || defaultValue)
       })
       callback(results)
     } else {
@@ -20,10 +25,10 @@ export class LocalStorage {
   set = (item: any, callback?: Function) => {
     if (!chrome.storage) {
       Object.keys(item).map(key => {
-        localStorage.setItem(key, item[key])
+        localStorage.setItem(key, JSON.stringify(item[key]))
       })
     } else {
-      chrome.storage.local.set(item);
+      chrome.storage.local.set(item)
     }
   }
 }

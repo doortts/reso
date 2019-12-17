@@ -64,7 +64,7 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
             </Typography>
           </div>
         } />
-      <Starred />
+      <Starred employee={employee} />
     </ContentLayout>
   )
 })
