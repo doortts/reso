@@ -115,7 +115,7 @@ const App = () => {
             <SettingPage />
           </Route>
           <Route path="/">
-            <div style={{ padding: 5 }}>
+            <div style={{ padding: 5, backgroundColor: '#fafafa' }}>
               <HelpMessage />
               <ShortcutLinks />
               <Grid container justify="center" spacing={1}>
