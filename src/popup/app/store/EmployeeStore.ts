@@ -78,8 +78,8 @@ export class EmployeeStore {
     })
   }
 
-  loadEnvFromRemote = (env: IEnv, callback: Function) => {
-    envCall.get('/').then(function(response) {
+  loadEnvFromRemote = (env: IEnv, callback: () => void) => {
+    envCall.get('/').then(response => {
       if (response.status === 200) {
         Object.assign(env, response.data)
         storage.set({
@@ -138,12 +138,12 @@ export class EmployeeStore {
 
         found.push(user)
 
-        this.findUserPhotoByEmail(user.mail).then(response => {
+        this.findUserPhotoByEmail(user.mail).then(res => {
           foundCount++
-          if (response.status === 200) {
-            user.photoUrl = response.data.photoUrl
+          if (res.status === 200) {
+            user.photoUrl = res.data.photoUrl
           } else {
-            this.sendErrorLog(response)
+            this.sendErrorLog(res)
           }
           if (foundCount === total) {
             this.state = 'Found: ' + foundCount

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { Button, InputBase } from '@material-ui/core'
-import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import InputBase from '@material-ui/core/InputBase'
+import createStyles from '@material-ui/core/styles/createStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 import SearchIcon from '@material-ui/icons/Search'
 
 import { storeContext } from './context'
@@ -93,17 +95,13 @@ export const SearchItem = () => {
   )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
       boxSizing: 'border-box',
       border: '2px solid #1976d2',
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
       '&:focus-within': {
         border: '2px solid #3f51b5',
       },

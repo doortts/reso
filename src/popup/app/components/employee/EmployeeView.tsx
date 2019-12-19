@@ -3,8 +3,11 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import { ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemText from '@material-ui/core/ListItemText'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import Typography from '@material-ui/core/Typography'
 
 import Starred from '../../Starred'
 import { IEmployee } from './EmployeeContainer'
@@ -71,7 +74,7 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
   )
 })
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   listItemAvatar: {
     minWidth: '46px',
     paddingLeft: '5px',

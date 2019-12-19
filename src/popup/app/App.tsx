@@ -6,9 +6,17 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import { AppBar, Fab, Grid, IconButton, Toolbar, useScrollTrigger, Zoom } from '@material-ui/core'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { KeyboardArrowUp, Settings } from '@material-ui/icons'
+import AppBar from '@material-ui/core/AppBar'
+import Fab from '@material-ui/core/Fab'
+import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
+import createStyles from '@material-ui/core/styles/createStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import Toolbar from '@material-ui/core/Toolbar'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Zoom from '@material-ui/core/Zoom'
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import Settings from '@material-ui/icons/Settings'
 
 import Employees from './components/employee/Employees'
 import SettingPage from './components/settings/SettingPage'
@@ -28,7 +36,7 @@ interface Props {
   children: React.ReactElement
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     scrollBtn: {
       position: 'fixed',

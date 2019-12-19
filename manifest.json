@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "Kick! (OSS/ES User Mention & Search)",
+  "description": "OSS/ES user mention & search extension",
+  "version": "1.5.3",
+
+  "browser_action": {
+    "default_title": "Save your time!",
+    "default_popup": "/views/popup.html"
+  },
+  "icons": {
+    "16": "/views/kick16.png",
+    "48": "/views/kick48.png",
+    "128": "/views/kick128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["/js/vendor.js", "/libs/lodash.core.min.js", "/libs/jquery.min.js", "/js/content.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["/js/vendor.js", "/js/page.js", "/js/background.js"]
+  },
+  "permissions": [
+    "activeTab","http://*/*", "storage", "https://www.google-analytics.com/"
+  ],
+  "options_ui": {
+    "page": "/views/options.html",
+    "chrome_style": true
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+K",
+        "mac": "Command+K",
+        "chromeos": "Alt+Shift+K",
+        "linux": "Alt+Shift+K"
+      }
+    }
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self' https://photoemp.navercorp.com"
+}

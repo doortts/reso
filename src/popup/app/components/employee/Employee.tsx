@@ -2,7 +2,8 @@ import React from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { ListItem, makeStyles, Theme } from '@material-ui/core'
+import ListItem from '@material-ui/core/ListItem'
+import makeStyles from '@material-ui/core/styles/makeStyles'
 
 import { useStore } from '../../context'
 import { IEmployee } from './EmployeeContainer'
@@ -46,23 +47,26 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   const store = useStore()
   const classes = useStyles()
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-    e.preventDefault()
 
     switch (e.key) {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
+        e.preventDefault()
         store.increaseSelectedEmployeeIndex()
         break
       case 'Up': // IE/Edge specific value
       case 'ArrowUp':
+        e.preventDefault()
         store.decreaseSelectedEmployeeIndex()
         break
       case 'Enter':
+        e.preventDefault()
         employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
         break
       case 'F':
       case 'f':
       case 'ㄹ':
+        e.preventDefault()
         store.focusInput()
         console.log('F')
         break
@@ -88,7 +92,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   )
 })
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(0),
     boxSizing: 'border-box',

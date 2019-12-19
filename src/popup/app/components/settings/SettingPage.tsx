@@ -1,20 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  createStyles,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Theme,
-} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
+import createStyles from '@material-ui/core/styles/createStyles'
 import makeStyles from '@material-ui/core/styles/makeStyles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles(theme => createStyles({
   paper: {
     margin: theme.spacing(2, 2),
     padding: theme.spacing(1, 2),

@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Button, ButtonGroup } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 interface Props {
   keyword?: string

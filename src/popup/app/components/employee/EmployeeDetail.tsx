@@ -1,18 +1,17 @@
 import React from 'react'
+import { HTMLAttributes } from 'react'
 
 import { useObserver } from 'mobx-react-lite'
 
-import {
-  Button,
-  Card, CardActions,
-  CardContent,
-  CardMedia,
-  createStyles,
-  makeStyles,
-  Theme,
-  Typography,
-  useTheme,
-} from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import createStyles from '@material-ui/core/styles/createStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import useTheme from '@material-ui/core/styles/useTheme'
+import Typography from '@material-ui/core/Typography'
 
 import { useStore } from '../../context'
 
@@ -26,7 +25,7 @@ const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
 }
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     card: {
       display: 'flex',
