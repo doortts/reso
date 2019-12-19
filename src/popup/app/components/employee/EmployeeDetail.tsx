@@ -1,7 +1,7 @@
 import React from 'react'
+
 import { useObserver } from 'mobx-react-lite'
 
-import { useStore } from '../../context'
 import {
   Button,
   Card, CardActions,
@@ -10,12 +10,15 @@ import {
   createStyles,
   makeStyles,
   Theme,
-  Typography, useTheme
+  Typography,
+  useTheme,
 } from '@material-ui/core'
+
+import { useStore } from '../../context'
 
 declare module 'react' {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: 'auto' | 'eager' | 'lazy';
+    loading?: 'auto' | 'eager' | 'lazy'
   }
 }
 
@@ -58,7 +61,7 @@ export const EmployeeDetail = () => {
   const theme = useTheme()
 
   return useObserver(() => {
-      let employee = store.getSelectedEmployee()
+      const employee = store.getSelectedEmployee()
       if (!employee) {
         return (<div></div>)
       }
@@ -69,7 +72,7 @@ export const EmployeeDetail = () => {
         photoUrl,
         department,
         mail,
-        telephoneNumber
+        telephoneNumber,
       } = employee
 
       return (
@@ -104,6 +107,6 @@ export const EmployeeDetail = () => {
           </Card>
         </div>
       )
-    }
+    },
   )
 }

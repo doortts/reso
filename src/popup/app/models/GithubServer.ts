@@ -10,7 +10,7 @@ export class GithubServer implements IRemoteServer {
   name: string
   base_url: string
   token: string
-  type: string = "Github Enterprise" // Just for the marking
+  type: string = 'Github Enterprise' // Just for the marking
 
   constructor(name: string, base_url: string, token: string) {
     this.name = name
@@ -23,8 +23,8 @@ export class GithubServer implements IRemoteServer {
       method: 'GET',
       url: `${this.base_url}/search/users?q=${email}`,
       headers: {
-        "Authorization": `token ${this.token}`
-      }
+        Authorization: `token ${this.token}`,
+      },
     })
   }
 
@@ -33,8 +33,8 @@ export class GithubServer implements IRemoteServer {
       method: 'GET',
       url: `${this.base_url}/users/${userId}`,
       headers: {
-        "Authorization": `token ${this.token}`
-      }
+        Authorization: `token ${this.token}`,
+      },
     })
   }
 }

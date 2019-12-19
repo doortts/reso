@@ -26,6 +26,7 @@
     "start": "parcel src/popup/popup.html",
     "build": "parcel build src/popup/app/index.tsx -d dist -o js/content.js",
     "debug": "open '/Applications/Google Chrome.app' --args --disable-web-security --user-data-dir --remote-debugging-port=9222",
+    "lint": "tslint -c ./tslint.json './src/**/*.ts{,x}' --fix",
     "test": "jest"
   },
   "eslintConfig": {

@@ -1,7 +1,6 @@
-import React from 'react';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+
+import { Button, ButtonGroup } from '@material-ui/core'
 
 interface Props {
   keyword?: string
@@ -16,7 +15,7 @@ export const ShortcutLinks: React.FC<Props> = props => {
         <Button>Working-Hour</Button>
       </ButtonGroup>
     </div>
-  );
+  )
 }
 
 export default ShortcutLinks

@@ -1,18 +1,27 @@
-import { observable, action, reaction, toJS } from 'mobx'
+import { action, observable, reaction, toJS } from 'mobx'
+
 import axios from 'axios'
 
 import { IEmployee } from '../components/employee/EmployeeContainer'
+import { GithubServer, IRemoteServer } from '../models/GithubServer'
 import { storage } from '../models/LocalStorage'
-import { IRemoteServer, GithubServer } from '../models/GithubServer'
+
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [property: string]: Json }
+  | Json[]
 
 export interface IEnv {
   LDAP_SERVER: string
   PHOTO_SERVER: string
   CLIENT_ID: string
-  GITHUB_ENTERPRISE_API_BASE_URLS: Array<IRemoteServer>
+  GITHUB_ENTERPRISE_API_BASE_URLS: IRemoteServer[]
   MAIL_PAGE: string
   ADDRESS_PAGE: string
-  URLS: Object
+  URLS: Json,
   SUPPORT_PAGE: string
   LAST_UPDATE: string
   LOG_SERVER: string
@@ -20,16 +29,16 @@ export interface IEnv {
 
 const envCall = axios.create({
   baseURL: 'http://mention.naverlabs.com',
-  timeout: 1000
+  timeout: 1000,
 })
 
 export class EmployeeStore {
-  @observable employees: Array<IEmployee> = []
+  @observable employees: IEmployee[] = []
   @observable state = 'Ready' // "pending" / "done" / "error"
-  @observable githubServers: Array<GithubServer> = []
+  @observable githubServers: GithubServer[] = []
   @observable selectedEmployeeIndex = 0
   @observable inputRef: any
-  @observable favoriteEmployees: Array<IEmployee> = []
+  @observable favoriteEmployees: IEmployee[] = []
   firstRun: boolean = true
 
   syncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
@@ -50,7 +59,7 @@ export class EmployeeStore {
   loadEnv = (env: IEnv) => {
     storage.get({
       ENV: {},
-      starredUsers: []
+      starredUsers: [],
     }, (local: any) => {
       this.favoriteEmployees = local.starredUsers
       if (!local.ENV.LDAP_SERVER) {
@@ -65,16 +74,16 @@ export class EmployeeStore {
   findUserPhotoByEmail = (email: string) => {
     return axios({
       method: 'GET',
-      url: `${this.env.PHOTO_SERVER}/json/${email}`
+      url: `${this.env.PHOTO_SERVER}/json/${email}`,
     })
   }
 
   loadEnvFromRemote = (env: IEnv, callback: Function) => {
-    envCall.get('/').then(function (response) {
+    envCall.get('/').then(function(response) {
       if (response.status === 200) {
         Object.assign(env, response.data)
         storage.set({
-          ENV: env
+          ENV: env,
         })
         callback()
       }
@@ -82,12 +91,12 @@ export class EmployeeStore {
   }
 
   isRequiredToHide(user: any) {
-    let toSkipDepartment = ['업무지원']
+    const toSkipDepartment = ['업무지원']
     return toSkipDepartment.indexOf(user.department) !== -1
   }
 
   @action
-  setEmployees = (employees: Array<IEmployee>) => {
+  setEmployees = (employees: IEmployee[]) => {
     this.employees = employees
   }
 
@@ -96,8 +105,8 @@ export class EmployeeStore {
       method: 'GET',
       url: `${this.env.LDAP_SERVER}/api/users/search?q=*${query}*&searchFields=displayName`,
       headers: {
-        'Content-Type': 'text/plain'
-      }
+        'Content-Type': 'text/plain',
+      },
     })
   }
 
@@ -113,9 +122,9 @@ export class EmployeeStore {
         return
       }
 
-      let found: Array<IEmployee> = []
+      const found: IEmployee[] = []
       let foundCount = 0
-      let total = response.data._embedded.users.length
+      const total = response.data._embedded.users.length
 
       response.data._embedded.users.map((user: IEmployee) => {
         if (this.isRequiredToHide(user)) {
@@ -123,7 +132,7 @@ export class EmployeeStore {
           return
         }
 
-        if(this.isFavoredEmployee(user)){
+        if (this.isFavoredEmployee(user)) {
           user.favorite = true
         }
 
@@ -155,8 +164,8 @@ export class EmployeeStore {
       data: {
         projectName: 'mgkick',
         projectVersion: '2.0.0',
-        body: [...errors]
-      }
+        body: [...errors],
+      },
     })
     console.log('Error log was sent!')
   }
@@ -209,7 +218,7 @@ export class EmployeeStore {
 
   addToFavoriteEmployees = (target: IEmployee) => {
     const found = this.favoriteEmployees.find(
-      (employee: IEmployee) => employee.employeeNumber === target.employeeNumber
+      (employee: IEmployee) => employee.employeeNumber === target.employeeNumber,
     )
 
     if (!found) {
@@ -219,12 +228,12 @@ export class EmployeeStore {
 
   removeFromFavoriteEmployees = (target: IEmployee) => {
     this.favoriteEmployees = this.favoriteEmployees.filter(
-      (employee: IEmployee) => employee.employeeNumber !== target.employeeNumber
+      (employee: IEmployee) => employee.employeeNumber !== target.employeeNumber,
     )
   }
 
   isFavoredEmployee = (target: IEmployee) => this.favoriteEmployees.find(
-    employee => target.employeeNumber === employee.employeeNumber
+    employee => target.employeeNumber === employee.employeeNumber,
   )
 }
 

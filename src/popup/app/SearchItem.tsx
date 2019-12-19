@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
 import { Button, InputBase } from '@material-ui/core'
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
 import SearchIcon from '@material-ui/icons/Search'
-import { useHistory } from "react-router-dom";
 
-import { EmployeeStore } from './store/EmployeeStore'
 import { storeContext } from './context'
+import { EmployeeStore } from './store/EmployeeStore'
 
 let imeUpdating = false
 
 export const SearchItem = () => {
   const classes = useStyles()
-  let history = useHistory();
+  const history = useHistory()
   const store = React.useContext(storeContext) || new EmployeeStore()
   const [keywords, setKeywords] = useState('')
 
@@ -35,7 +36,7 @@ export const SearchItem = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(imeUpdating) return
+    if (imeUpdating) { return }
 
     switch (e.key) {
       case 'Enter':
@@ -137,7 +138,7 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: 'flex',
       flexWrap: 'wrap',
-      marginTop: '2px'
+      marginTop: '2px',
     },
     margin: {
       margin: theme.spacing(1),
@@ -152,7 +153,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menu: {
       width: 200,
-    }
+    },
   }),
 )
 

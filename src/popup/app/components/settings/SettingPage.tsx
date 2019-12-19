@@ -1,19 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
-import { Button, createStyles, Paper, Theme } from '@material-ui/core'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+  Button,
+  createStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Theme,
+} from '@material-ui/core'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
-const useStyles = makeStyles( (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   paper: {
     margin: theme.spacing(2, 2),
     padding: theme.spacing(1, 2),
@@ -44,7 +45,7 @@ const SettingPage = () => {
           <Table aria-label="simple table" className={classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell style={{maxWidth: '100px'}}>Shortcut</TableCell>
+                <TableCell style={{ maxWidth: '100px' }}>Shortcut</TableCell>
                 <TableCell>Description</TableCell>
               </TableRow>
             </TableHead>

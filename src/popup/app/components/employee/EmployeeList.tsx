@@ -1,8 +1,9 @@
 import React from 'react'
+
 import { useObserver } from 'mobx-react-lite'
 
-import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 import { useStore } from '../../context'
+import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 
 export const EmployeeList = React.memo((): any => {
   const store = useStore()

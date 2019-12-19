@@ -1,16 +1,18 @@
 // react-unstable-attributes.d.ts
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import { ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from '@material-ui/core'
+
 import styled from 'styled-components'
 
+import { ListItemAvatar, ListItemText, makeStyles, Theme, Typography } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar'
+
+import Starred from '../../Starred'
 import { IEmployee } from './EmployeeContainer'
 import ServerNames from './ServerNames'
-import Starred from '../../Starred'
 
 declare module 'react' {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: 'auto' | 'eager' | 'lazy';
+    loading?: 'auto' | 'eager' | 'lazy'
   }
 }
 
@@ -73,26 +75,26 @@ const useStyles = makeStyles((theme: Theme) => ({
   listItemAvatar: {
     minWidth: '46px',
     paddingLeft: '5px',
-    paddingBottom: '2px'
+    paddingBottom: '2px',
   },
   Avatar: {
-    border: '1px solid #f1f1f1'
+    border: '1px solid #f1f1f1',
   },
   listItemPrimaryText: {
     fontSize: '14px',
     fontWeight: 600,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   listItemSecondaryText: {
     fontSize: '11px',
-    color: 'inherit'
+    color: 'inherit',
   },
   listItemText: {
     width: '100%',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
-  }
+    textOverflow: 'ellipsis',
+  },
 }))
 
 const ContentLayout = styled.div`

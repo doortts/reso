@@ -1,0 +1,41 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "interface-name": false,
+    "member-access": false,
+    "no-console": false,
+    "no-trailing-whitespace": true,
+    "object-literal-key-quotes": [true, "as-needed"],
+    "object-literal-sort-keys": false,
+    "ordered-imports": [
+      true,
+      {
+        "grouped-imports": true,
+        "groups": [
+          { "name": "react", "match": "^react.*", "order": 1 },
+          { "name": "mobx", "match": "^mobx.*", "order": 2 },
+          { "name": "pacakges", "match": "^app.*", "order": 20 },
+          { "name": "components", "match": "^@.*", "order": 30 },
+          { "name": "parent_dir", "match": "^\\.\\.", "order": 40 },
+          { "name": "current_dir", "match": "^\\.", "order": 40 },
+          { "name": "extra", "match": ".*", "order": 5 }
+        ]
+      }
+    ],
+    "quotemark": [true, "single", "jsx-double"],
+    "semicolon": [true, "never"],
+    "variable-name": {
+      "options": [
+        "check-format",
+        "allow-pascal-case",
+        "allow-snake-case"
+      ]
+    }
+  },
+  "rulesDirectory": []
+}

@@ -1,20 +1,17 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+
 import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
 
-import { EmployeeList } from './EmployeeList'
 import { EmployeeDetail } from './EmployeeDetail'
-
-interface Props {
-  employees?: Array<Object>
-}
+import { EmployeeList } from './EmployeeList'
 
 const useStyles = makeStyles(theme => ({
   ul: {
     listStyleType: 'none',
     position: 'sticky',
-    top: '70px'
-  }
+    top: '70px',
+  },
 }))
 
 const Employees = () => {

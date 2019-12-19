@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Checkbox from '@material-ui/core/Checkbox'
-import Star from '@material-ui/icons/Star'
-import StarBorder from '@material-ui/icons/StarBorder'
 
-import { useStore } from './context'
+import Checkbox from '@material-ui/core/Checkbox'
+import { Star, StarBorder } from '@material-ui/icons'
+
 import { IEmployee } from './components/employee/EmployeeContainer'
+import { useStore } from './context'
 
 interface Props {
   employee: IEmployee

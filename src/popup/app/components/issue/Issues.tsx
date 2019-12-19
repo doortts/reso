@@ -1,7 +1,8 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import React from 'react'
+
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import { makeStyles } from '@material-ui/core/styles'
 
 interface Props {
   keyword?: string
@@ -12,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
   },
-}));
+}))
 
 export const Issues: React.FC<Props> = props => {
   const classes = useStyles()
@@ -23,7 +24,7 @@ export const Issues: React.FC<Props> = props => {
         <div>Issue list</div>
       </Paper>
     </Grid>
-  );
+  )
 }
 
 export default Issues

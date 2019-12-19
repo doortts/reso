@@ -1,31 +1,31 @@
 import React from 'react'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { Grid, AppBar, Toolbar, Fab, useScrollTrigger, Zoom, IconButton } from '@material-ui/core'
-import { KeyboardArrowUp, Settings } from '@material-ui/icons'
-
 import {
   BrowserRouter as Router,
-  Switch,
+  Link,
   Route,
-  Link
+  Switch,
 } from 'react-router-dom'
 
-import StoreProvider from './context'
-import SearchItem from './SearchItem'
-import HelpMessage from './HelpMessage'
-import ShortcutLinks from './ShortcutLinks'
+import { AppBar, Fab, Grid, IconButton, Toolbar, useScrollTrigger, Zoom } from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { KeyboardArrowUp, Settings } from '@material-ui/icons'
+
 import Employees from './components/employee/Employees'
+import SettingPage from './components/settings/SettingPage'
+import StoreProvider from './context'
 import ResetCss from './global-styles/css-reset'
 import Scrollbar from './global-styles/scrollbar'
-import SettingPage from './components/settings/SettingPage'
+import HelpMessage from './HelpMessage'
+import SearchItem from './SearchItem'
+import ShortcutLinks from './ShortcutLinks'
 
 interface Props {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  window?: () => Window;
-  children: React.ReactElement;
+  window?: () => Window
+  children: React.ReactElement
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
       right: theme.spacing(2),
     },
     AppBar: {
-      backgroundColor: '#1976d2'
+      backgroundColor: '#1976d2',
     },
     Toolbar: {
-      justifyContent: 'space-between'
-    }
+      justifyContent: 'space-between',
+    },
   }),
 )
 

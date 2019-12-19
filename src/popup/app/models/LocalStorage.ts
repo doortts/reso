@@ -1,13 +1,11 @@
 const noop = () => {}
 
-interface StorageItem {
-  (items: { [key: string]: any }): void
-}
+type StorageItem = (items: { [key: string]: any }) => void
 
 export class LocalStorage {
   get = (item: any, callback: StorageItem) => {
     if (!chrome.storage) {
-      let results = {} as any
+      const results = {} as any
       Object.keys(item).map(key => {
         let defaultValue = '{}'
 
@@ -22,7 +20,7 @@ export class LocalStorage {
     }
   }
 
-  set = (item: any, callback?: Function) => {
+  set = (item: any, callback?: () => void) => {
     if (!chrome.storage) {
       Object.keys(item).map(key => {
         localStorage.setItem(key, JSON.stringify(item[key]))

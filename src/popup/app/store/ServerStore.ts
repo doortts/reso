@@ -1,11 +1,11 @@
-import {observable, action, computed} from 'mobx'
+import { action } from 'mobx'
 
-import {IEnv} from './EmployeeStore'
-import {GithubServer, IRemoteServer} from '../models/GithubServer'
-import {IEmployee} from '../components/employee/EmployeeContainer'
+import { IEmployee } from '../components/employee/EmployeeContainer'
+import { GithubServer, IRemoteServer } from '../models/GithubServer'
+import { IEnv } from './EmployeeStore'
 
 export class ServerStore {
-  githubServers: Array<GithubServer> = []
+  githubServers: GithubServer[] = []
 
   init = (env: IEnv) => {
     if (this.githubServers.length === 0) {
@@ -22,50 +22,52 @@ export class ServerStore {
   }
 
   getDefaultId = (email: string) => {
-    var defaultUserId = email.split("@")[0]
-    return defaultUserId.replace(/\./g, "-")
+    const defaultUserId = email.split('@')[0]
+    return defaultUserId.replace(/\./g, '-')
   }
 
   @action
   doesUserExist = (user = {} as IEmployee) => {
     const targetId = this.getDefaultId(user.mail)
-    if (!user.idExistingServers) user.idExistingServers = []
+    if (!user.idExistingServers) {
+      user.idExistingServers = []
+    }
 
     this.githubServers.forEach((server: GithubServer) => {
       server.searchUserIdFromRemote(targetId)
-      .then(response => {
-        switch (response.status) {
-          case 200:
-            user.idExistingServers?.push({
-              name: server.name,
-              loginId: targetId
-            })
-            return
-          case 404:
-            // Fallback search using email
-            // If a user changes their loginId manually, they cannot be searched in handy.
-            // To find exact loginId, searching by email is needed.
-            //
-            // Limitation: Even though this case, only users whose email is opened publicly
-            // can be searched.
+        .then(response => {
+          switch (response.status) {
+            case 200:
+              user.idExistingServers?.push({
+                name: server.name,
+                loginId: targetId,
+              })
+              return
+            case 404:
+              // Fallback search using email
+              // If a user changes their loginId manually, they cannot be searched in handy.
+              // To find exact loginId, searching by email is needed.
+              //
+              // Limitation: Even though this case, only users whose email is opened publicly
+              // can be searched.
 
-            server.findUserByEmail(user.mail)
-            .then(response => {
-              if (response.data?.items.length > 0) {
-                user.displayName += server.name
-                console.log(user.displayName)
-                user.idExistingServers?.push({
-                  name: server.name,
-                  loginId: response.data.items[0].login
+              server.findUserByEmail(user.mail)
+                .then(response => {
+                  if (response.data?.items.length > 0) {
+                    user.displayName += server.name
+                    console.log(user.displayName)
+                    user.idExistingServers?.push({
+                      name: server.name,
+                      loginId: response.data.items[0].login,
+                    })
+                  }
+                  console.log(user)
                 })
-              }
-              console.log(user)
-            })
-            return
-          default:
-            console.error("searchUserIdFromRemote error! ", response)
-        }
-      })
+              return
+            default:
+              console.error('searchUserIdFromRemote error! ', response)
+          }
+        })
     })
   }
 }

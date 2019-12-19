@@ -1,10 +1,10 @@
-import { Employee } from './Employee'
-
 import React from 'react'
+
 import { computed } from 'mobx'
 import { Observer } from 'mobx-react-lite'
 
 import { GithubServer } from '../../models/GithubServer'
+import { Employee } from './Employee'
 
 export interface IServer {
   name: string,
@@ -21,13 +21,13 @@ export interface IEmployee {
   mail: string
   telephoneNumber: string
   photoUrl?: string
-  idExistingServers: Array<IServer>
+  idExistingServers: IServer[]
   favorite?: boolean
 }
 
 interface Props {
   employee: IEmployee
-  servers: Array<GithubServer>
+  servers: GithubServer[]
   isSelected: boolean
   classes?: any
 }
@@ -55,15 +55,15 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
   }
 
   doesUserExist = () => {
-    var loginId = this.guessDefaultLoginId(this.employee.mail)
+    const loginId = this.guessDefaultLoginId(this.employee.mail)
     this.employee.idExistingServers = []
 
     this.servers.map(targetServer => {
       targetServer.searchUserIdFromRemote(loginId)
         .then(response => {
-          let remoteServer = {
+          const remoteServer = {
             name: targetServer.name,
-            loginId: loginId
+            loginId,
           }
           this.employee.idExistingServers?.push(remoteServer)
         })
@@ -78,11 +78,11 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
               if (response.data?.items.length > 0) {
                 this.employee.idExistingServers?.push({
                   name: targetServer.name,
-                  loginId: response.data.items[0].login
+                  loginId: response.data.items[0].login,
                 })
               }
             })
-            .catch(error => {
+            .catch(err => {
               console.log('Not found')
             })
           return
