@@ -80,7 +80,9 @@ export const EmployeeDetail = () => {
           <Card className={classes.card}>
             <CardMedia
               className={classes.cover}
+              component="img"
               image={photoUrl}
+              onError={addDefaultSrc}
               title="Employee Photo"
             />
             <div className={classes.details}>
