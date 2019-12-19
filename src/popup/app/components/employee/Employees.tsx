@@ -19,13 +19,13 @@ const Employees = () => {
 
   return (
     <>
-      <Grid item xs={4}>
+      <Grid item xs={5}>
         <div>Employee list</div>
         <ul className={classes.ul}>
           <EmployeeList />
         </ul>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={7}>
         <EmployeeDetail />
       </Grid>
     </>
