@@ -15,6 +15,19 @@ interface Props {
   handleClick: (e: React.MouseEvent<HTMLElement>) => void
 }
 
+
+const useStyles = makeStyles(theme => ({
+  listItem: {
+    padding: theme.spacing(0.5),
+    boxSizing: 'border-box',
+    borderRadius: '3px',
+    '&:focus': {
+      outline: 'none',
+    },
+    marginTop: '2px',
+  },
+}))
+
 const getRandomBg = () => {
   const bgColors = [
     'linear-gradient(90deg, rgba(217,255,16,1) 0%, rgba(198,40,40,1) 100%)',
@@ -91,15 +104,3 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
     </ListItem>
   )
 })
-
-const useStyles = makeStyles(theme => ({
-  listItem: {
-    padding: theme.spacing(0),
-    boxSizing: 'border-box',
-    borderRadius: '3px',
-    '&:focus': {
-      outline: 'none',
-    },
-    marginTop: '2px',
-  },
-}))

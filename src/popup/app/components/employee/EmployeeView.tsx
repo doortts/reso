@@ -27,6 +27,42 @@ const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
 }
 
+const ContentLayout = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 3px;
+  padding-top: 3px;
+`
+
+const useStyles = makeStyles(theme => ({
+  listItemAvatar: {
+    minWidth: '46px',
+    paddingLeft: '5px',
+    paddingBottom: '2px',
+  },
+  Avatar: {
+    border: '1px solid #f1f1f1',
+  },
+  listItemPrimaryText: {
+    fontSize: '14px',
+    fontWeight: 600,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  listItemSecondaryText: {
+    fontSize: '11px',
+    color: 'inherit',
+  },
+  listItemText: {
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+}))
+
 export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
   const classes = useStyles()
   const { displayName, photoUrl, idExistingServers, department, mail } = employee
@@ -73,39 +109,3 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
     </ContentLayout>
   )
 })
-
-const useStyles = makeStyles(theme => ({
-  listItemAvatar: {
-    minWidth: '46px',
-    paddingLeft: '5px',
-    paddingBottom: '2px',
-  },
-  Avatar: {
-    border: '1px solid #f1f1f1',
-  },
-  listItemPrimaryText: {
-    fontSize: '14px',
-    fontWeight: 600,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  listItemSecondaryText: {
-    fontSize: '11px',
-    color: 'inherit',
-  },
-  listItemText: {
-    width: '100%',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-}))
-
-const ContentLayout = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(20px);
-  border-radius: 3px;
-  padding-top: 3px;
-`

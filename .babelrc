@@ -15,12 +15,6 @@
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-optional-chaining",
-    ["babel-plugin-import",
-    {
-      "libraryName": "@material-ui/icons",
-      "libraryDirectory": "esm",
-      "camel2DashComponentName": false
-    }]
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }

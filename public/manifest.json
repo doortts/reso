@@ -1,47 +1,43 @@
 {
-    "manifest_version": 2,
-    "name": "Kick! (OSS/ES User Mention & Search)",
-    "description": "OSS/ES user mention & search extension",
-    "version": "2.0.0",
-    "chrome_url_overrides" : {
-      "pageToOverride": "/index.html"
-    },
-    "browser_action": {
-      "default_title": "Save your time!",
-      "default_popup": "/popup.html"
-    },
-    "icons": {
-      "16": "/images/kick16.png",
-      "48": "/images/kick48.png",
-      "128": "/images/kick128.png"
-    },
-    "content_scripts": [
-      {
-        "matches": ["http://*/*", "https://*/*"],
-        "js": ["/js/content.js", "/libs/lodash.core.min.js", "/libs/jquery.min.js", "/js/content.js"]
+  "manifest_version": 2,
+  "name": "Kick! (OSS/ES User Mention & Search)",
+  "description": "OSS/ES user mention & search extension",
+  "version": "1.5.3",
+  "browser_action": {
+    "default_title": "Save your time!",
+    "default_popup": "/popup.html"
+  },
+  "icons": {
+    "16": "/images/kick16.png",
+    "48": "/images/kick48.png",
+    "128": "/images/kick128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["/libs/lodash.core.min.js", "/libs/jquery.min.js", "/content/content.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["/background/background.js"]
+  },
+  "permissions": [
+    "activeTab","http://*/*", "storage", "https://www.google-analytics.com/"
+  ],
+  "options_ui": {
+    "page": "/popup.html",
+    "chrome_style": true
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+K",
+        "mac": "Command+K",
+        "chromeos": "Alt+Shift+K",
+        "linux": "Alt+Shift+K"
       }
-    ],
-    
-    "background": {
-      "scripts": ["/js/vendor.js", "/js/page.js", "/js/background.js"]
-    },
-    "permissions": [
-      "activeTab","http://*/*", "storage", "https://www.google-analytics.com/"
-    ],
-    "options_ui": {
-      "page": "/options.html",
-      "chrome_style": true
-    },
-    "commands": {
-      "_execute_browser_action": {
-        "suggested_key": {
-          "windows": "Alt+Shift+K",
-          "mac": "Command+K",
-          "chromeos": "Alt+Shift+K",
-          "linux": "Alt+Shift+K"
-        }
-      }
-    },
-    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self' https://photoemp.navercorp.com"
-  }
-  
+    }
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self' https://photoemp.navercorp.com"
+}
