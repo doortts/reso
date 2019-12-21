@@ -12,3 +12,115 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Followings are shims for chrome extension and material ui mixed bugs */
+a {
+  color: initial;
+  text-decoration: inherit;
+}
+
+input, button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: none;
+  padding-inline-end: inherit;
+  padding-inline-start: inherit;
+  min-height: inherit;
+  min-width: inherit;
+  background-image: inherit;
+  box-shadow: inherit;
+  color: inherit;
+  text-shadow: inherit;
+  border-color: inherit;
+}
+:enabled:hover:-webkit-any(select,input[type="checkbox"],input[type="radio"],:-webkit-any(button,input[type="button"],input[type="submit"])) {
+  -webkit-appearance: none;
+  min-height: inherit;
+  background-image: inherit;
+  box-shadow: inherit;
+  color: inherit;
+  text-shadow: inherit;
+  border-color: inherit;
+  text-decoration: inherit;
+}
+
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+input:not([type]),
+textarea {
+  box-sizing: initial;
+  color: inherit;
+  min-height: inherit;
+  border-width: inherit;
+  border-style: inherit;
+  border-color: inherit;
+  border-image: inherit;
+  border-radius: inherit;
+  font: inherit;
+  margin: inherit;
+  outline: inherit;
+  padding: 8px 8px 8px 16px;
+}
+
+:enabled:active:-webkit-any(
+select,
+input[type="checkbox"],
+input[type="number"],
+input[type="password"],
+input[type="radio"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+input:not([type])),
+:enabled:focus:-webkit-any(
+select,
+input[type="checkbox"],
+input[type="number"],
+input[type="password"],
+input[type="radio"],
+input[type="search"],
+input[type="text"],
+input[type="url"],
+input:not([type])) {
+  color: inherit;
+  min-height: inherit;
+  border-width: inherit;
+  border-style: inherit;
+  border-color: inherit;
+  border-image: inherit;
+  border-radius: inherit;
+  font: inherit;
+  margin: inherit;
+  outline: inherit;
+}
+
+input[type="checkbox"] {
+  height: inherit;
+  position: inherit;
+  vertical-align: inherit;
+  width: inherit;
+}
+
+:-webkit-any(button,input[type="button"],input[type="submit"]), select, input[type="checkbox"], input[type="radio"] {
+  -webkit-appearance: none;
+  user-select: none;
+  background-image: inherit;
+  box-shadow: inherit;
+  color: inherit;
+  text-shadow: inherit;
+  border-width: inherit;
+  border-style: inherit;
+  border-color: inherit;
+  border-image: inherit;
+  border-radius: inherit;
+  font: inherit;
+  margin: inherit;
+  outline: inherit;
+}
+
+/* Shims end here */
+
