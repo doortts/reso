@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Kick! (OSS/ES User Mention & Search)",
   "description": "OSS/ES user mention & search extension",
-  "version": "1.5.3",
+  "version": "2.0.0",
   "browser_action": {
     "default_title": "Save your time!",
     "default_popup": "/popup.html"

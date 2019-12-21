@@ -111,7 +111,7 @@ const App = () => {
               <SearchItem />
               <Link to="/settings">
                 <IconButton aria-label="display more actions" edge="end">
-                  <Settings />
+                  <Settings style={{color: 'white'}}/>
                 </IconButton>
               </Link>
             </Toolbar>
