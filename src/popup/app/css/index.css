@@ -99,10 +99,10 @@ input:not([type])) {
 }
 
 input[type="checkbox"] {
-  height: inherit;
-  position: inherit;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   vertical-align: inherit;
-  width: inherit;
 }
 
 :-webkit-any(button,input[type="button"],input[type="submit"]), select, input[type="checkbox"], input[type="radio"] {
