@@ -51,14 +51,18 @@ const selectedStyle = (): any => ({
 const bgColor = selectedStyle()
 
 export const Employee: React.FC<Props> = observer<Props>(props => {
-  const { employee, handleClick, isSelected } = props
+  const { employee, isSelected } = props
 
   const focusStyle = isSelected ? bgColor : {}
 
   const store = useStore()
   const classes = useStyles()
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     switch (e.key) {
       case 'Down': // IE/Edge specific value
       case 'ArrowDown':
@@ -69,10 +73,6 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       case 'ArrowUp':
         e.preventDefault()
         store.decreaseSelectedEmployeeIndex()
-        break
-      case 'Enter':
-        e.preventDefault()
-        employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
         break
       case 'F':
       case 'f':
