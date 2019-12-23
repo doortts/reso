@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { useLocalStore } from 'mobx-react-lite'
 
-import { createStore, TStore } from './store/EmployeeStore'
+import { createStore, EmployeeStore, TStore } from './store/EmployeeStore'
 
 export const storeContext = React.createContext<TStore | null>(null)
 
-export const StoreProvider: React.FC = ({ children }) => {
-  const store = useLocalStore(createStore)
+interface Props {
+  children: ReactElement
+  store?: EmployeeStore
+}
+
+export const StoreProvider = (props: Props) => {
+  const { children, store} = props
+  const localStore = store || useLocalStore(createStore)
 
   return (
-    <storeContext.Provider value={store}>
+    <storeContext.Provider value={localStore}>
       {children}
     </storeContext.Provider>
   )

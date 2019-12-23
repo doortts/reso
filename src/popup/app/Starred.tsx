@@ -14,10 +14,11 @@ interface Props {
 export const Starred: React.FC<Props> = props => {
   const store = useStore()
   const { employee } = props
-  const [starred, setStarred] = useState(employee.favorite)
+  const [starred, setStarred] = useState(employee.favorite || false)
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
+    console.log('click called')
 
     if (e.target.checked) {
       setStarred(true)

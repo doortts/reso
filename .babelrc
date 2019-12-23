@@ -10,6 +10,7 @@
         }
       }
     ],
+    "@babel/react",
     "@babel/preset-typescript"
   ],
   "plugins": [
