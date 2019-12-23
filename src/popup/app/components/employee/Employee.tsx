@@ -12,9 +12,7 @@ import { EmployeeView } from './EmployeeView'
 interface Props {
   employee: IEmployee
   isSelected: boolean
-  handleClick: (e: React.MouseEvent<HTMLElement>) => void
 }
-
 
 const useStyles = makeStyles(theme => ({
   listItem: {

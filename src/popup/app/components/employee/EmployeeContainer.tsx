@@ -46,10 +46,6 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
     return this.props.servers
   }
 
-  handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    this.employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
-  }
-
   guessDefaultLoginId = (email: string) => {
     return email.split('@')[0].replace(/\./g, '-')
   }
@@ -98,7 +94,6 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
       <Observer render={() => (
         <Employee
           employee={this.employee}
-          handleClick={this.handleClick}
           isSelected={isSelected}
         />
       )} />
