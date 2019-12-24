@@ -120,7 +120,9 @@ const App = () => {
         <Toolbar id="back-to-top-anchor" />
         <Switch>
           <Route path="/settings">
-            <SettingPage />
+            <div style={{ padding: 5, backgroundColor: '#fafafa' }}>
+              <SettingPage />
+            </div>
           </Route>
           <Route path="/">
             <div style={{ padding: 5, backgroundColor: '#fafafa' }}>
