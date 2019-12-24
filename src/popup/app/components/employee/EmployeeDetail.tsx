@@ -14,6 +14,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
 import Typography from '@material-ui/core/Typography'
 
 import { useStore } from '../../context'
+import ServerNames from './ServerNames'
 
 declare module 'react' {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme =>
   }),
 )
 
-export const EmployeeDetail = () => {
+export const EmployeeDetail = React.memo(() => {
   const store = useStore()
 
   const classes = useStyles()
@@ -95,6 +96,12 @@ export const EmployeeDetail = () => {
                   <div>{department} </div>
                   <div>{telephoneNumber} </div>
                   <div>{mail}</div>
+                  <div>
+                    <ServerNames
+                      idExistingServers={employee?.idExistingServers}
+                      showLoginId={true}
+                    />
+                  </div>
                 </Typography>
               </CardContent>
               <div className={classes.controls}>
@@ -110,4 +117,4 @@ export const EmployeeDetail = () => {
       )
     },
   )
-}
+})

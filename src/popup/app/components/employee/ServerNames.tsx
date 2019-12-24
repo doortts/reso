@@ -6,21 +6,28 @@ import { IServer } from './EmployeeContainer'
 
 interface Props {
   idExistingServers: IServer[]
+  showLoginId?: boolean
 }
 
-export const ServerNames: React.FC<Props> = React.memo(({idExistingServers}) => {
+export const ServerNames: React.FC<Props> = React.memo((props: Props) => {
+  const { idExistingServers, showLoginId } = props
   return useObserver(() => (
-    <div>
-      {idExistingServers?.map(server => (
-        <span style={getBadgeStyle(server.name)} key={server.name}>{server.name}</span>
-      ))}
+    <div style={{height: '13px', marginLeft: '2px'}}>
+      {idExistingServers?.map(server => {
+        return (
+          <span
+            style={getBadgeStyle(server.name)}
+            key={server.name}
+          >{showLoginId ? server.loginId : server.name}</span>
+        )
+      })}
     </div>
   ))
 })
 
 const getBadgeStyle = (serverName: string) => {
   const badge = {
-    fontSize: '10px',
+    fontSize: '11px',
     backgroundColor: '#343434',
     color: 'whitesmoke',
     borderRadius: '3px',

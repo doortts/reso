@@ -8,6 +8,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import { useStore } from '../../context'
 import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
+import { sendUserIdToActiveTab } from './mention'
 
 interface Props {
   employee: IEmployee
@@ -59,7 +60,9 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   const classes = useStyles()
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    employee.idExistingServers?.map(server => console.log(server.name, server.loginId))
+    employee.idExistingServers?.map(server => {
+      sendUserIdToActiveTab(server, store.githubServers)
+    })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
