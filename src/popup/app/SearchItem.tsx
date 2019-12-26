@@ -91,7 +91,7 @@ export const SearchItem = () => {
 
   const handleSearch = () => {
     if (['m', 'ㅡ'].includes(keywords)) {
-      chrome.tabs.create({ url: 'http://mail.navercorp.com' });
+      chrome?.tabs.create({ url: 'http://mail.navercorp.com' });
       return
     }
     history.push('/')
