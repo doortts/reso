@@ -233,6 +233,8 @@ export class EmployeeStore {
   isFavoredEmployee = (target: IEmployee) => this.favoriteEmployees.find(
     employee => target.employeeNumber === employee.employeeNumber,
   )
+
+  getEmployeeAddressPageUrl = () => this.env.ADDRESS_PAGE + this.getSelectedEmployee()?.mail
 }
 
 export const createStore = (): EmployeeStore => {

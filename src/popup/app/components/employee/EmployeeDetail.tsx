@@ -60,6 +60,10 @@ export const EmployeeDetail = React.memo(() => {
   const classes = useStyles()
   const theme = useTheme()
 
+  const handleShowMore = () => {
+    chrome?.windows.create({ url: store.getEmployeeAddressPageUrl() })
+  }
+
   return useObserver(() => {
       const employee = store.getSelectedEmployee()
       if (!employee) {
@@ -106,7 +110,11 @@ export const EmployeeDetail = React.memo(() => {
               </CardContent>
               <div className={classes.controls}>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={handleShowMore}
+                  >
                     Show More
                   </Button>
                 </CardActions>

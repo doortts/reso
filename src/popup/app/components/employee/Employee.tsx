@@ -60,9 +60,13 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   const classes = useStyles()
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    employee.idExistingServers?.map(server => {
-      sendUserIdToActiveTab(server, store.githubServers)
-    })
+    if (e.metaKey) {
+      chrome?.windows.create({ url: store.getEmployeeAddressPageUrl() })
+    } else {
+      employee.idExistingServers?.map(server => {
+        sendUserIdToActiveTab(server, store.githubServers)
+      })
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
