@@ -18,7 +18,6 @@ export const Starred: React.FC<Props> = props => {
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.stopPropagation()
-    console.log('click called')
 
     if (e.target.checked) {
       setStarred(true)

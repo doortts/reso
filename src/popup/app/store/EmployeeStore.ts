@@ -41,12 +41,9 @@ export class EmployeeStore {
   @observable favoriteEmployees: IEmployee[] = []
   firstRun: boolean = true
   env: IEnv = {} as any
-  syncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
-    console.log('[reaction] sync favoriteEmployees: ' + this.favoriteEmployees.length)
-    for (const emp of this.favoriteEmployees) {
-      console.log(emp.employeeNumber)
-    }
-
+  autoSyncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
+    // reaction function is called automatically by MobX
+    // when favoriteEmployees.length is changed
     storage.set({ starredUsers: toJS(this.favoriteEmployees) })
   })
 
