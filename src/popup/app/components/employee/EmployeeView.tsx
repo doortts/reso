@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import Typography from '@material-ui/core/Typography'
 
-import Starred from '../../Starred'
+import Starred from './Starred'
 import { IEmployee } from './EmployeeContainer'
 import ServerNames from './ServerNames'
 

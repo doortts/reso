@@ -2,8 +2,8 @@ import React from 'react'
 
 import { observer } from 'mobx-react-lite'
 
-import { storeContext } from './context'
-import { EmployeeStore } from './store/EmployeeStore'
+import { storeContext } from '../context'
+import { EmployeeStore } from '../store/EmployeeStore'
 
 interface Props {
     keyword?: string

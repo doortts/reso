@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 
-import { CustomSnackbar, SnackbarVariant } from './components/snackbar'
-import { storeContext } from './context'
+import { CustomSnackbar, SnackbarVariant } from '../snackbar'
+import { storeContext } from '../../context'
 import useSearchItemStyle from './searchItemStyles'
-import { EmployeeStore } from './store/EmployeeStore'
+import { EmployeeStore } from '../../store/EmployeeStore'
 
 let imeUpdating = false
 
@@ -34,6 +34,7 @@ export const SearchItem = () => {
   const store = React.useContext(storeContext) || new EmployeeStore()
   store.inputRef = useRef()
 
+  const history = useHistory()
   const [keywords, setKeywords] = useState('')
   const [snackbarOptions, setSnackbarOptions] = useState(defaultSnackbarOptions)
 
@@ -73,7 +74,7 @@ export const SearchItem = () => {
       return
     }
 
-    useHistory().push('/')
+    history.push('/')
     store.findEmployees(keywords)
   }
 

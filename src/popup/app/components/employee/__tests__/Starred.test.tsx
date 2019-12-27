@@ -3,7 +3,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import StoreProvider, { useStore } from '../../../context'
-import Starred from '../../../Starred'
+import Starred from '../Starred'
 import mockEmployees from '../../../store/__tests__/mockEmployees'
 import { EmployeeStore } from '../../../store/EmployeeStore'
 

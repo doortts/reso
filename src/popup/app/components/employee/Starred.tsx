@@ -4,8 +4,8 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Star from '@material-ui/icons/Star'
 import StarBorder from '@material-ui/icons/StarBorder'
 
-import { IEmployee } from './components/employee/EmployeeContainer'
-import { useStore } from './context'
+import { IEmployee } from './EmployeeContainer'
+import { useStore } from '../../context'
 
 interface Props {
   employee: IEmployee

@@ -23,9 +23,9 @@ import SettingPage from './components/settings/SettingPage'
 import StoreProvider from './context'
 import ResetCss from './global-styles/css-reset'
 import Scrollbar from './global-styles/scrollbar'
-import HelpMessage from './HelpMessage'
-import SearchItem from './SearchItem'
-import ShortcutLinks from './ShortcutLinks'
+import HelpMessage from './components/HelpMessage'
+import SearchItem from './components/search/SearchItem'
+import ShortcutLinks from './components/ShortcutLinks'
 
 interface Props {
   /**
