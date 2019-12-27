@@ -118,6 +118,7 @@ class PageRecorder {
 
 var position = 0;
 var lastMention = "";
+var lastEditorText = "";
 var HOST = {
     OSS: 'oss.navercorp.com',
     ES: 'es.naverlabs.com',
@@ -326,7 +327,8 @@ chrome.runtime.onMessage.addListener(
 
         if(isMention){
             // remember last mention to prevent unintended mention repetition
-            if(lastMention === request.mention){
+            if(lastMention === request.mention
+                && lastEditorText === focused.val()){
                 return;
             } else {
                 lastMention = request.mention;
@@ -338,6 +340,7 @@ chrome.runtime.onMessage.addListener(
             let mentionInserted = text.substr(0, position) + request.mention +
                 " " + text.substr(position);
             focused.val(mentionInserted);
+            lastEditorText = mentionInserted;
 
             // move to new cursor position
             focused.selectRange(position + request.mention.length + 1);
