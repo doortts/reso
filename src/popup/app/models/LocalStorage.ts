@@ -4,7 +4,9 @@ type StorageItem = (items: { [key: string]: any }) => void
 
 export class LocalStorage {
   get = (item: any, callback: StorageItem) => {
-    if (!chrome.storage) {
+    if (chrome.storage) {
+      chrome.storage.local.get(item, callback)
+    } else {
       const results = {} as any
       Object.keys(item).map(key => {
         let defaultValue = '{}'
@@ -15,18 +17,17 @@ export class LocalStorage {
         results[key] = JSON.parse(localStorage.getItem(key) || defaultValue)
       })
       callback(results)
-    } else {
-      chrome.storage.local.get(item, callback)
+
     }
   }
 
   set = (item: any, callback?: () => void) => {
-    if (!chrome.storage) {
+    if (chrome.storage) {
+      chrome.storage.local.set(item)
+    } else {
       Object.keys(item).map(key => {
         localStorage.setItem(key, JSON.stringify(item[key]))
       })
-    } else {
-      chrome.storage.local.set(item)
     }
   }
 }

@@ -8,11 +8,6 @@ import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 export const Employees = React.memo((): any => {
   const store = useStore()
 
-  if (store.firstRun) {
-    store.firstRun = false
-    store.employees = store.favoriteEmployees
-  }
-
   return useObserver(() => (
     store.employees.map((employee: IEmployee) => {
       let isSelected = false

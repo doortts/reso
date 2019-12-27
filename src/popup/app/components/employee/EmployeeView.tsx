@@ -13,12 +13,6 @@ import Starred from '../../Starred'
 import { IEmployee } from './EmployeeContainer'
 import ServerNames from './ServerNames'
 
-declare module 'react' {
-  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: 'auto' | 'eager' | 'lazy'
-  }
-}
-
 interface Props {
   employee: IEmployee
 }
@@ -75,7 +69,6 @@ export const EmployeeView: React.FC<Props> = React.memo(({ employee }) => {
             src={photoUrl}
             width="40px"
             onError={addDefaultSrc}
-            loading="lazy"
             alt="Employee photo"
           />
         </Avatar>

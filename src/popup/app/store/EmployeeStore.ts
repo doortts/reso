@@ -39,7 +39,6 @@ export class EmployeeStore {
   @observable selectedEmployeeIndex = 0
   @observable inputRef: any
   @observable favoriteEmployees: IEmployee[] = []
-  firstRun: boolean = true
   env: IEnv = {} as any
   autoSyncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
     // reaction function is called automatically by MobX
@@ -56,7 +55,8 @@ export class EmployeeStore {
       ENV: {},
       starredUsers: [],
     }, (local: any) => {
-      this.favoriteEmployees = local.starredUsers
+      this.initFavoriteUsers(local)
+
       if (!local.ENV.LDAP_SERVER) {
         this.loadEnvFromRemote(env, this.init)
       } else {
@@ -232,6 +232,14 @@ export class EmployeeStore {
   )
 
   getEmployeeAddressPageUrl = () => this.env.ADDRESS_PAGE + this.getSelectedEmployee()?.mail
+
+  private initFavoriteUsers(local: any) {
+    const favoriteUsersFromStorage = local?.starredUsers || []
+    this.employees = favoriteUsersFromStorage
+    this.favoriteEmployees = favoriteUsersFromStorage
+    this.selectedEmployeeIndex = -1
+    this.inputRef?.current.focus()
+  }
 }
 
 export const createStore = (): EmployeeStore => {
