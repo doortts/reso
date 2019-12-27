@@ -18,7 +18,7 @@ import Zoom from '@material-ui/core/Zoom'
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import Settings from '@material-ui/icons/Settings'
 
-import Employees from './components/employee/Employees'
+import EmployeePage from './components/employee/EmployeePage'
 import SettingPage from './components/settings/SettingPage'
 import StoreProvider from './context'
 import ResetCss from './global-styles/css-reset'
@@ -129,7 +129,7 @@ const App = () => {
               <HelpMessage />
               <ShortcutLinks />
               <Grid container justify="center" spacing={1}>
-                <Employees />
+                <EmployeePage />
               </Grid>
             </div>
             <ResetCss />

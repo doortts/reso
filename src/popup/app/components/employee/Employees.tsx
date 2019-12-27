@@ -1,35 +1,35 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { useObserver } from 'mobx-react-lite'
 
-import { EmployeeDetail } from './EmployeeDetail'
-import { EmployeeList } from './EmployeeList'
+import { useStore } from '../../context'
+import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 
-const useStyles = makeStyles(theme => ({
-  ul: {
-    listStyleType: 'none',
-    position: 'sticky',
-    top: '70px',
-  },
-}))
+export const Employees = React.memo((): any => {
+  const store = useStore()
 
-const Employees = () => {
-  const classes = useStyles()
+  if (store.firstRun) {
+    store.firstRun = false
+    store.employees = store.favoriteEmployees
+  }
 
-  return (
-    <>
-      <Grid item xs={5}>
-        <div>Employee list</div>
-        <ul className={classes.ul}>
-          <EmployeeList />
-        </ul>
-      </Grid>
-      <Grid item xs={7}>
-        <EmployeeDetail />
-      </Grid>
-    </>
-  )
-}
+  return useObserver(() => (
+    store.employees.map((employee: IEmployee) => {
+      let isSelected = false
 
-export default Employees
+      // TODO: Move to store
+      if (store.selectedEmployeeIndex >= 0 && store.employees[store.selectedEmployeeIndex].mail === employee.mail) {
+        isSelected = true
+      }
+
+      return (
+        <EmployeeContainer
+          key={employee.uid}
+          employee={employee}
+          servers={store.githubServers}
+          isSelected={isSelected}
+        />
+      )
+    })
+  ))
+})
