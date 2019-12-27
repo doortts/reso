@@ -1,109 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
-import { fade } from '@material-ui/core/styles/colorManipulator'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
 import SearchIcon from '@material-ui/icons/Search'
 
+import { CustomSnackbar, SnackbarVariant } from './components/snackbar'
 import { storeContext } from './context'
+import useSearchItemStyle from './searchItemStyles'
 import { EmployeeStore } from './store/EmployeeStore'
-
-const useStyles = makeStyles(theme =>
-  createStyles({
-    search: {
-      position: 'relative',
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      borderRadius: theme.shape.borderRadius,
-      boxSizing: 'border-box',
-      border: '2px solid #1976d2',
-      '&:focus-within': {
-        border: '2px solid #3f51b5',
-      },
-      marginLeft: 0,
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-      },
-    },
-    searchIcon: {
-      width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 2),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 200,
-        '&:focus': {
-          width: 200,
-        },
-      },
-    },
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      marginTop: '2px',
-    },
-    margin: {
-      margin: theme.spacing(1),
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-    menu: {
-      width: 200,
-    },
-  }),
-)
 
 let imeUpdating = false
 
-export const SearchItem = () => {
-  const classes = useStyles()
-  const history = useHistory()
-  const store = React.useContext(storeContext) || new EmployeeStore()
-  const [keywords, setKeywords] = useState('')
+const handleCompositionUpdate = (e: React.CompositionEvent<HTMLInputElement>) => {
+  imeUpdating = true
+}
 
+const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+  imeUpdating = false
+}
+
+const defaultSnackbarOptions = {
+  open: false,
+  message: '',
+  variant: SnackbarVariant.Info
+}
+
+const hideSnackbar = (snackbarOptions: any, setSnackbarOptions: any) => {
+  setSnackbarOptions({ ...snackbarOptions, open: false })
+}
+
+export const SearchItem = () => {
+  const store = React.useContext(storeContext) || new EmployeeStore()
   store.inputRef = useRef()
+
+  const [keywords, setKeywords] = useState('')
+  const [snackbarOptions, setSnackbarOptions] = useState(defaultSnackbarOptions)
+
+  const handleClose = (event?: SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    hideSnackbar(snackbarOptions, setSnackbarOptions)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value)
+
+    if (snackbarOptions.open) {
+      hideSnackbar(snackbarOptions, setSnackbarOptions)
+    }
   }
 
   const handleSearch = () => {
-    if (['m', 'ㅡ'].includes(keywords)) {
-      chrome?.tabs.create({ url: 'http://mail.navercorp.com' });
+    if (keywords.length === 0) {
       return
     }
-    history.push('/')
+
+    if (['m', 'ㅡ'].includes(keywords)) {
+      chrome?.tabs.create({ url: 'http://mail.navercorp.com' })
+      return
+    }
+
+    if (keywords.length < 2) {
+      setSnackbarOptions({
+        ...snackbarOptions,
+        variant: SnackbarVariant.Error,
+        open: true,
+        message: '2글자 이상 입력해야 합니다',
+      })
+      return
+    }
+
+    useHistory().push('/')
     store.findEmployees(keywords)
-  }
-
-  const handleCompositionUpdate = (e: React.CompositionEvent<HTMLInputElement>) => {
-    imeUpdating = true
-  }
-
-  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
-    imeUpdating = false
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -133,6 +104,8 @@ export const SearchItem = () => {
     store.inputRef?.current.focus()
   }, [])
 
+  const classes = useSearchItemStyle()
+
   return (
     <React.Fragment>
       <div className={classes.search}>
@@ -159,6 +132,10 @@ export const SearchItem = () => {
             Search<SearchIcon />
           </div>
         </Button>
+        <CustomSnackbar
+          options={snackbarOptions}
+          handleClose={handleClose}
+        />
       </div>
     </React.Fragment>
   )
