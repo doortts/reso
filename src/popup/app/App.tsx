@@ -19,13 +19,13 @@ import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
 import Settings from '@material-ui/icons/Settings'
 
 import EmployeePage from './components/employee/EmployeePage'
+import HelpMessage from './components/HelpMessage'
+import SearchItem from './components/search/SearchItem'
 import SettingPage from './components/settings/SettingPage'
+import ShortcutLinks from './components/ShortcutLinks'
 import StoreProvider from './context'
 import ResetCss from './global-styles/css-reset'
 import Scrollbar from './global-styles/scrollbar'
-import HelpMessage from './components/HelpMessage'
-import SearchItem from './components/search/SearchItem'
-import ShortcutLinks from './components/ShortcutLinks'
 
 interface Props {
   /**
