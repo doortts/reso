@@ -27,7 +27,7 @@ const ShortcutField = (props: IProps) => {
   return (
     <>
       <TextField
-        style={{ width: '100px' }}
+        style={{ width: '80px' }}
         placeholder="Key"
         size="small"
         value={keyMap.key}
@@ -35,7 +35,7 @@ const ShortcutField = (props: IProps) => {
         required
       />
       <TextField
-        style={{ width: '100px' }}
+        style={{ width: '120px' }}
         placeholder="Desc"
         size="small"
         value={keyMap.desc}

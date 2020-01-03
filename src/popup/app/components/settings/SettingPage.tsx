@@ -28,8 +28,12 @@ const SettingPage = () => {
 
   return (
     <Paper className={classes.paper}>
+      <h1><Link to="/">⬅ Back</Link></h1>
       <h1>설정 페이지</h1>
-      <div><Link to="/">Back</Link></div>
+      <div>
+        {/* tslint:disable-next-line:max-line-length */}
+        Report bug: <a href="https://oss.navercorp.com/communication-service/kick" target="_blank">https://oss.navercorp.com/communication-service/kick</a>
+      </div>
       <h2>초기화</h2>
       <div>
         <div>Clear all internally saved data including Star bookmarks</div>
@@ -51,6 +55,10 @@ const SettingPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
+              <TableRow key="f">
+                <TableCell component="th" scope="row">f</TableCell>
+                <TableCell>검색창으로 이동</TableCell>
+              </TableRow>
               <TableRow key="Cmd+K">
                 <TableCell size="small" component="th" scope="row"> Cmd + K </TableCell>
                 <TableCell>Popup (Mac OS)</TableCell>
@@ -63,21 +71,9 @@ const SettingPage = () => {
                 <TableCell component="th" scope="row">Enter</TableCell>
                 <TableCell>Mention</TableCell>
               </TableRow>
-              <TableRow key="Space">
-                <TableCell component="th" scope="row">Space</TableCell>
-                <TableCell>Multiple mention without closing window</TableCell>
-              </TableRow>
-              <TableRow key="f">
-                <TableCell component="th" scope="row">Space</TableCell>
-                <TableCell>Move focus to search box</TableCell>
-              </TableRow>
               <TableRow key="Shift + Enter">
-                <TableCell component="th" scope="row">Shift + Enter</TableCell>
-                <TableCell>Show user address page or <br />Open project page</TableCell>
-              </TableRow>
-              <TableRow key="/">
-                <TableCell component="th" scope="row">/</TableCell>
-                <TableCell>Show project list only</TableCell>
+                <TableCell component="th" scope="row">ALT + Enter | CMD + Enter</TableCell>
+                <TableCell>사내 주소 페이지 열기</TableCell>
               </TableRow>
             </TableBody>
           </Table>

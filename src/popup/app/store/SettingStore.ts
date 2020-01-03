@@ -27,7 +27,7 @@ export class SettingStore {
     url: 'https://nhrlove.navercorp.com/user/hrms/odm/worktime/worktimeHistoryPopup.nhn',
     target: 'newWindow',
   }, {
-    key: 'rRㄱ',
+    key: 'rRㄱ예',
     desc: 'Reserve',
     url: 'https://reserve.navercorp.com',
     target: 'newWindow',
