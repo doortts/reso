@@ -35,6 +35,7 @@ const envCall = axios.create({
 
 export class EmployeeStore {
   @observable employees: IEmployee[] = []
+  @observable isLoading = false
   @observable state = 'Ready' // "pending" / "done" / "error"
   @observable githubServers: GithubServer[] = []
   @observable selectedEmployeeIndex = 0
@@ -113,12 +114,14 @@ export class EmployeeStore {
   @action
   findEmployees = (query: string) => {
     this.state = 'Searching..'
+    this.isLoading = true
     this.resetCurrentSelect()
     this.setEmployees([])
 
     this.findEmployeesFromRemote(query).then(response => {
       if (!response.data._embedded) {
         this.state = 'Not found!'
+        this.isLoading = false
         return
       }
 
@@ -147,6 +150,7 @@ export class EmployeeStore {
           }
           if (foundCount === total) {
             this.state = 'Found: ' + foundCount
+            this.isLoading = false
             this.setEmployees(found)
           }
         }, error => {
