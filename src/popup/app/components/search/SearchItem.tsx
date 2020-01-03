@@ -8,7 +8,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import { CustomSnackbar, SnackbarVariant } from '../snackbar'
 import { storeContext } from '../../context'
 import useSearchItemStyle from './searchItemStyles'
-import { EmployeeStore } from '../../store/EmployeeStore'
 import Index from '../../store/RootStore'
 
 let imeUpdating = false

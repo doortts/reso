@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { EmployeeDetail } from './EmployeeDetail'
 import { Employees } from './Employees'
@@ -20,7 +20,6 @@ const EmployeePage = () => {
   return (
     <>
       <Grid item xs={5}>
-        <div>Employee list</div>
         <ul className={classes.ul}>
           <Employees />
         </ul>

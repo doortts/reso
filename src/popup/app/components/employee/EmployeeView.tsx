@@ -6,12 +6,12 @@ import styled from 'styled-components'
 import Avatar from '@material-ui/core/Avatar'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemText from '@material-ui/core/ListItemText'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
-import Starred from './Starred'
 import { IEmployee } from './EmployeeContainer'
 import ServerNames from './ServerNames'
+import Starred from './Starred'
 
 interface Props {
   employee: IEmployee

@@ -1,6 +1,5 @@
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useSearchItemStyle = makeStyles(theme =>
   createStyles({

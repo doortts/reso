@@ -1,5 +1,4 @@
 import React from 'react'
-import { HTMLAttributes } from 'react'
 
 import { useObserver } from 'mobx-react-lite'
 
@@ -8,19 +7,12 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
 import { useStore } from '../../context'
+import { EmployeeStore } from '../../store/EmployeeStore'
 import ServerNames from './ServerNames'
-
-declare module 'react' {
-  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    loading?: 'auto' | 'eager' | 'lazy'
-  }
-}
 
 const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
@@ -55,7 +47,7 @@ const useStyles = makeStyles(theme =>
 )
 
 export const EmployeeDetail = React.memo(() => {
-  const store = useStore()
+  const store = useStore() as EmployeeStore
 
   const classes = useStyles()
   const theme = useTheme()

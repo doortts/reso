@@ -3,7 +3,7 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import ListItem from '@material-ui/core/ListItem'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { useStore } from '../../context'
 import { IEmployee } from './EmployeeContainer'
