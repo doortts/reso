@@ -5,10 +5,10 @@ import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 
+import { EmployeeStore } from '../../store/EmployeeStore'
+import { SettingStore, ShortcutType } from '../../store/SettingStore'
 import { CustomSnackbar, SnackbarVariant } from '../snackbar'
-import { storeContext } from '../../context'
 import useSearchItemStyle from './searchItemStyles'
-import Index from '../../store/RootStore'
 
 let imeUpdating = false
 
@@ -23,15 +23,27 @@ const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
 const defaultSnackbarOptions = {
   open: false,
   message: '',
-  variant: SnackbarVariant.Info
+  variant: SnackbarVariant.Info,
 }
 
 const hideSnackbar = (snackbarOptions: any, setSnackbarOptions: any) => {
   setSnackbarOptions({ ...snackbarOptions, open: false })
 }
 
+export const openShortcutLink = (shortcut: ShortcutType | undefined) => {
+  if (shortcut) {
+    if (shortcut.target === 'newTab') {
+      chrome?.tabs.create({ url: shortcut.url })
+    } else {
+      chrome?.windows.create({ url: shortcut.url })
+    }
+    return
+  }
+}
+
 export const SearchItem = () => {
-  const store = React.useContext(storeContext)?.employeeStore || new Index()?.employeeStore
+  const store = useStore() as EmployeeStore
+  const settingStore = useStore(StoreType.Setting) as SettingStore
   store.inputRef = useRef()
 
   const history = useHistory()
@@ -59,8 +71,11 @@ export const SearchItem = () => {
       return
     }
 
-    if (['m', 'ㅡ'].includes(keywords)) {
-      chrome?.tabs.create({ url: 'http://mail.navercorp.com' })
+    const foundShortcut = settingStore.oneLetterShortcuts
+      .find(shortcut => shortcut.key.toLowerCase().split('').includes(keywords))
+
+    if (foundShortcut) {
+      openShortcutLink(foundShortcut)
       return
     }
 
@@ -78,6 +93,9 @@ export const SearchItem = () => {
     store.findEmployees(keywords)
   }
 
+  //
+  // Another parts of keyboard actions exists at Employee.tsx #handleClick
+  // See: Employee.tsx @handleClick
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (imeUpdating) {
       return

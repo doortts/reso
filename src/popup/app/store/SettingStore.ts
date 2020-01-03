@@ -1,24 +1,35 @@
-import { action, observable, reaction } from 'mobx'
+import { observable, reaction } from 'mobx'
 
 import { storage } from '../models/LocalStorage'
-import { Json } from './EmployeeStore'
-import Index from './RootStore'
+import RootStore from './RootStore'
+
+export interface ShortcutType {
+  key: string
+  url: string
+  desc: string
+  target: 'newTab' | 'newWindow'
+}
 
 export class SettingStore {
-  @observable oneLetterShortcuts: Json[] = [{
-    key: 'm',
+  @observable oneLetterShortcuts: ShortcutType[] = [{
+    key: 'mMㅡ',
     desc: 'mail',
     url: 'https://mail.navercorp.com',
     target: 'newTab',
   }, {
-    key: 'c',
+    key: 'cCㅊ',
     desc: 'Calendar',
     url: 'https://calendar.navercorp.com/main.nhn',
     target: 'newTab',
   }, {
-    key: 'w',
-    desc: 'mail',
+    key: 'wWㅈ',
+    desc: 'Working Hour',
     url: 'https://nhrlove.navercorp.com/user/hrms/odm/worktime/worktimeHistoryPopup.nhn',
+    target: 'newWindow',
+  }, {
+    key: 'rRㄱ',
+    desc: 'Reserve',
+    url: 'https://reserve.navercorp.com',
     target: 'newWindow',
   }]
 
@@ -28,10 +39,10 @@ export class SettingStore {
     storage.set({ oneLetterShortcuts: [] })
   })
 
-  private store: Index
+  private rootStore: RootStore
 
-  constructor(rootStore: Index) {
-    this.store = rootStore
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
 
     storage.get({
       oneLetterShortcuts: [],

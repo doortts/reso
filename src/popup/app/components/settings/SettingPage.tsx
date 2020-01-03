@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
-import createStyles from '@material-ui/core/styles/createStyles'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { createStyles, makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
+
+import OneLetterShortcuts from './OneLetterShortcuts'
 
 const useStyles = makeStyles(theme => createStyles({
   paper: {
@@ -27,12 +28,15 @@ const SettingPage = () => {
 
   return (
     <Paper className={classes.paper}>
-      <h1>Setting page</h1>
+      <h1>설정 페이지</h1>
       <div><Link to="/">Back</Link></div>
-      <h2>Reset</h2>
+      <h2>초기화</h2>
       <div>
         <div>Clear all internally saved data including Star bookmarks</div>
         <div><Button variant="contained" color="secondary">CLEAR ALL SETTINGS</Button></div>
+      </div>
+      <div>
+        <OneLetterShortcuts />
       </div>
       <div>
         <div>

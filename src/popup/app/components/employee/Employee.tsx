@@ -6,10 +6,10 @@ import ListItem from '@material-ui/core/ListItem'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useStore } from '../../context'
+import { EmployeeStore } from '../../store/EmployeeStore'
 import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
 import { sendUserIdToActiveTab } from './mention'
-import { EmployeeStore } from '../../store/EmployeeStore'
 
 interface Props {
   employee: IEmployee
