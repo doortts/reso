@@ -4,15 +4,16 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Star from '@material-ui/icons/Star'
 import StarBorder from '@material-ui/icons/StarBorder'
 
-import { IEmployee } from './EmployeeContainer'
 import { useStore } from '../../context'
+import { EmployeeStore } from '../../store/EmployeeStore'
+import { IEmployee } from './EmployeeContainer'
 
 interface Props {
   employee: IEmployee
 }
 
 export const Starred: React.FC<Props> = props => {
-  const store = useStore()
+  const store = useStore() as EmployeeStore
   const { employee } = props
   const [starred, setStarred] = useState(employee.favorite || false)
 

@@ -5,6 +5,7 @@ import axios from 'axios'
 import { IEmployee } from '../components/employee/EmployeeContainer'
 import { GithubServer, IRemoteServer } from '../models/GithubServer'
 import { storage } from '../models/LocalStorage'
+import Index from './RootStore'
 
 export type Json =
   | string
@@ -40,13 +41,17 @@ export class EmployeeStore {
   @observable inputRef: any
   @observable favoriteEmployees: IEmployee[] = []
   env: IEnv = {} as any
+
   autoSyncFavoriteUsers = reaction(() => this.favoriteEmployees.length, length => {
     // reaction function is called automatically by MobX
     // when favoriteEmployees.length is changed
     storage.set({ starredUsers: toJS(this.favoriteEmployees) })
   })
 
-  constructor() {
+  private store: Index
+
+  constructor(rootStore: Index) {
+    this.store = rootStore
     this.loadEnv(this.env)
   }
 
@@ -241,9 +246,3 @@ export class EmployeeStore {
     this.inputRef?.current.focus()
   }
 }
-
-export const createStore = (): EmployeeStore => {
-  return new EmployeeStore()
-}
-
-export type TStore = ReturnType<typeof createStore>

@@ -9,6 +9,7 @@ import { useStore } from '../../context'
 import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
 import { sendUserIdToActiveTab } from './mention'
+import { EmployeeStore } from '../../store/EmployeeStore'
 
 interface Props {
   employee: IEmployee
@@ -56,7 +57,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
 
   const focusStyle = isSelected ? bgColor : {}
 
-  const store = useStore()
+  const store = useStore() as EmployeeStore
   const classes = useStyles()
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {

@@ -2,6 +2,7 @@ import { action, observable, reaction } from 'mobx'
 
 import { storage } from '../models/LocalStorage'
 import { Json } from './EmployeeStore'
+import Index from './RootStore'
 
 export class SettingStore {
   @observable oneLetterShortcuts: Json[] = [{
@@ -27,7 +28,11 @@ export class SettingStore {
     storage.set({ oneLetterShortcuts: [] })
   })
 
-  constructor() {
+  private store: Index
+
+  constructor(rootStore: Index) {
+    this.store = rootStore
+
     storage.get({
       oneLetterShortcuts: [],
     }, (local: any) => {

@@ -9,6 +9,7 @@ import { CustomSnackbar, SnackbarVariant } from '../snackbar'
 import { storeContext } from '../../context'
 import useSearchItemStyle from './searchItemStyles'
 import { EmployeeStore } from '../../store/EmployeeStore'
+import Index from '../../store/RootStore'
 
 let imeUpdating = false
 
@@ -31,7 +32,7 @@ const hideSnackbar = (snackbarOptions: any, setSnackbarOptions: any) => {
 }
 
 export const SearchItem = () => {
-  const store = React.useContext(storeContext) || new EmployeeStore()
+  const store = React.useContext(storeContext)?.employeeStore || new Index()?.employeeStore
   store.inputRef = useRef()
 
   const history = useHistory()
@@ -79,7 +80,9 @@ export const SearchItem = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (imeUpdating) { return }
+    if (imeUpdating) {
+      return
+    }
 
     switch (e.key) {
       case 'Enter':
