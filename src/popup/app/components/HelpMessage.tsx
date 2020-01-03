@@ -6,9 +6,9 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Chip from '@material-ui/core/Chip'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import FaceIcon from '@material-ui/icons/Face'
+import MoodBadIcon from '@material-ui/icons/MoodBad'
 import TagFacesIcon from '@material-ui/icons/TagFaces'
-import FaceIcon from '@material-ui/icons/Face';
-import MoodBadIcon from '@material-ui/icons/MoodBad';
 
 import { useStore } from '../context'
 import { EmployeeStore } from '../store/EmployeeStore'

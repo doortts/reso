@@ -1,6 +1,7 @@
+import { observable } from 'mobx'
+
 import { EmployeeStore } from './EmployeeStore'
 import { SettingStore } from './SettingStore'
-import { observable } from 'mobx'
 
 export class RootStore {
   @observable employeeStore: EmployeeStore

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
 
+import { StoreType, useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
 import { SettingStore, ShortcutType } from '../../store/SettingStore'
 import { CustomSnackbar, SnackbarVariant } from '../snackbar'

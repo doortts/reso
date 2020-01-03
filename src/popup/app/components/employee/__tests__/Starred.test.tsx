@@ -27,7 +27,7 @@ describe('Starred', () => {
 
     // When
     checkbox.getDOMNode<HTMLInputElement>().checked = !checkbox.getDOMNode<HTMLInputElement>().checked
-    checkbox.simulate('change');
+    checkbox.simulate('change')
 
     // Then
     expect(rootStore.employeeStore.favoriteEmployees.length).toEqual(1)
