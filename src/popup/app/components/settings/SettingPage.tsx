@@ -11,6 +11,10 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
 import OneLetterShortcuts from './OneLetterShortcuts'
+import { SnackbarVariant } from '../snackbar'
+import { StoreType, useStore } from '../../context'
+import { UIStateStore } from '../../store/UIStateStore'
+import { EmployeeStore } from '../../store/EmployeeStore'
 
 const useStyles = makeStyles(theme => createStyles({
   paper: {
@@ -45,6 +49,21 @@ const useStyles = makeStyles(theme => createStyles({
 }))
 
 const SettingPage = () => {
+  const employeeStore = useStore(StoreType.Employee) as EmployeeStore
+  const uiStore = useStore(StoreType.UI) as UIStateStore
+
+  const handleClearAll = () => {
+    employeeStore.favoriteEmployees = []
+    chrome.storage.local.clear()
+    chrome.storage.sync.clear(() => {
+      uiStore.showSnackbar({
+        variant: SnackbarVariant.Success,
+        open: true,
+        message: '모든 설정을 초기화 하였습니다',
+      })
+    })
+  }
+
   const classes = useStyles()
 
   return (
@@ -66,7 +85,15 @@ const SettingPage = () => {
       <h2 className={classes.h2}>초기화</h2>
       <div>
         <div>Clear all internally saved data including Star bookmarks</div>
-        <div><Button variant="contained" color="secondary">CLEAR ALL SETTINGS</Button></div>
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleClearAll}
+          >
+            CLEAR ALL SETTINGS
+          </Button>
+        </div>
       </div>
       </Paper>
       <div>
