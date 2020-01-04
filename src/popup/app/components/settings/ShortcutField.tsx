@@ -4,8 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
 
-import { SettingStore, ShortcutType } from '../../store/SettingStore'
 import { StoreType, useStore } from '../../context'
+import { SettingStore, ShortcutType } from '../../store/SettingStore'
 
 interface IProps {
   shortcut: ShortcutType
@@ -19,25 +19,35 @@ const ShortcutField = (props: IProps) => {
   const [keyMap, setKeyMap] = useState({ ...shortcut })
 
   const handleKeyMapChange = (name: keyof typeof keyMap) => (
-    event: React.ChangeEvent<{ value: unknown }>,
+    event: React.ChangeEvent<{ value: unknown }>
   ) => {
-    setKeyMap({
-      ...keyMap,
-      [name]: event.target.value,
-    })
+    const exist = store.oneLetterShortcuts.find(current => current.idx === keyMap.idx)
 
-    const updatedShortcuts = store.oneLetterShortcuts.map(currentShortcut => {
-      if (currentShortcut.idx === keyMap.idx) {
-        return ({
-          ...keyMap,
-          [name]: event.target.value,
-        })
-      } else {
-        return currentShortcut
+    if (exist) { // update existing one letter link
+      setKeyMap({
+        ...keyMap,
+        [name]: event.target.value,
+      })
+
+      const updatedShortcuts = store.oneLetterShortcuts.map(current => {
+        if (current.idx === keyMap.idx) {
+          return ({
+            ...keyMap,
+            [name]: event.target.value,
+          })
+        } else {
+          return current
+        }
+      })
+
+      store.setOneLetterShortcuts(updatedShortcuts)
+    } else {
+      store.newCandidateShortcut = {
+        ...keyMap,
+        [name]: event.target.value,
       }
-    })
-
-    store.setOneLetterShortcuts(updatedShortcuts)
+      setKeyMap(store.newCandidateShortcut)
+    }
   }
 
   return (

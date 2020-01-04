@@ -1,9 +1,12 @@
 import { action, observable, reaction, toJS } from 'mobx'
 
+import { SnackbarVariant } from '../components/snackbar'
 import { storage } from '../models/LocalStorage'
 import RootStore from './RootStore'
 
 export interface ShortcutType {
+  [index: string]: any
+
   idx: number
   key: string
   url: string
@@ -40,17 +43,27 @@ const defaultShortcutKeys: ShortcutType[] = [{
 let timeout = 0
 
 const debounce = (func: () => void, delay: number) => {
-  clearTimeout(timeout);
+  clearTimeout(timeout)
   timeout = setTimeout(func, delay)
 }
 
+export const getDefaultShortcut = () => ({
+  idx: Date.now(),
+  key: '',
+  desc: '',
+  url: '',
+  target: 'newTab',
+}) as ShortcutType
+
 export class SettingStore {
   @observable oneLetterShortcuts: ShortcutType[] = []
+  newCandidateShortcut: ShortcutType
 
   private rootStore: RootStore
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore
+    this.newCandidateShortcut = getDefaultShortcut()
 
     storage.get({
       oneLetterShortcuts: [],
@@ -64,11 +77,37 @@ export class SettingStore {
   }
 
   @action
-  setOneLetterShortcuts(oneLetterShortcuts: ShortcutType[]) {
+  setOneLetterShortcuts(oneLetterShortcuts: ShortcutType[], delay = 1000) {
     this.oneLetterShortcuts = oneLetterShortcuts
-    debounce( () => {
+    debounce(() => {
       storage.set({ oneLetterShortcuts: toJS(this.oneLetterShortcuts) })
       console.log('sync called')
-    }, 1000)
+    }, delay)
+  }
+
+  @action
+  addOneLetterShortcut() {
+    let validated = true
+
+    Object.keys(this.newCandidateShortcut).forEach(key => {
+      console.log('> ', key, !this.newCandidateShortcut[key], this.newCandidateShortcut)
+      if (!this.newCandidateShortcut[key]) {
+        this.rootStore.uiStateStore.showSnackbar({
+          variant: SnackbarVariant.Error,
+          open: true,
+          message: `${key} 항목이 비어 있습니다`,
+        })
+        validated = false
+        return
+      }
+    })
+
+    if (!validated) {
+      return false
+    }
+
+    this.setOneLetterShortcuts([...this.oneLetterShortcuts, this.newCandidateShortcut], 0)
+    this.newCandidateShortcut = getDefaultShortcut()
+    return true
   }
 }

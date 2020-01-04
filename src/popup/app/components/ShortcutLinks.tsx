@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useObserver } from 'mobx-react-lite'
+
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -17,7 +19,7 @@ export const ShortcutLinks: React.FC<Props> = props => {
 
   const handleClick = (shortcut: ShortcutType) => (e: React.MouseEvent) => openShortcutLink(shortcut)
 
-  return (
+  return useObserver(() => (
     <>
       <div>
         <ButtonGroup size="small" aria-label="small outlined button group">
@@ -29,7 +31,7 @@ export const ShortcutLinks: React.FC<Props> = props => {
         </ButtonGroup>
       </div>
     </>
-  )
+  ))
 }
 
 export default ShortcutLinks
