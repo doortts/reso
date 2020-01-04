@@ -22,6 +22,7 @@ import HelpMessage from './components/HelpMessage'
 import SearchItem from './components/search/SearchItem'
 import SettingPage from './components/settings/SettingPage'
 import ShortcutLinks from './components/ShortcutLinks'
+import { CustomSnackbar } from './components/snackbar'
 import StoreProvider from './context'
 import ResetCss from './global-styles/css-reset'
 import Scrollbar from './global-styles/scrollbar'
@@ -114,6 +115,7 @@ const App = () => {
                 </IconButton>
               </Link>
             </Toolbar>
+            <CustomSnackbar />
           </AppBar>
         </ElevationScroll>
         <Toolbar id="back-to-top-anchor" />

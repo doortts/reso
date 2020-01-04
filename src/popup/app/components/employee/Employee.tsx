@@ -70,6 +70,9 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
     }
   }
 
+  //
+  // Another parts of keyboard actions exists at SearchItem.tsx #handleKeyDown
+  // See: SearchItem.tsx @handleKeyDown
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     switch (e.key) {
       case 'Down': // IE/Edge specific value

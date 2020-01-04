@@ -25,6 +25,7 @@ export const StoreProvider = (props: Props) => {
 export enum StoreType {
   Employee,
   Setting,
+  UI,
 }
 
 export const useStore = (storeType?: StoreType) => {
@@ -36,6 +37,8 @@ export const useStore = (storeType?: StoreType) => {
   switch (storeType) {
     case StoreType.Setting:
       return store.settingStore
+    case StoreType.UI:
+      return store.uiStateStore
     case StoreType.Employee:
     default:
       return store.employeeStore

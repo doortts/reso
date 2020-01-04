@@ -1,5 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 
+import { useObserver } from 'mobx-react-lite'
+
 import clsx from 'clsx'
 
 import IconButton from '@material-ui/core/IconButton'
@@ -12,6 +14,8 @@ import ErrorIcon from '@material-ui/icons/Error'
 import InfoIcon from '@material-ui/icons/Info'
 import WarningIcon from '@material-ui/icons/Warning'
 
+import { StoreType, useStore } from '../../context'
+import { UIStateStore } from '../../store/UIStateStore'
 import useSnackbarStyles from './snackbarStyles'
 
 const variantIcon = {
@@ -66,35 +70,36 @@ export enum SnackbarVariant {
   Warning = 'warning',
 }
 
-interface ISuccessSnackbar {
-  options: {
-    message: string
-    open: boolean
-    variant: SnackbarVariant,
-  }
-  handleClose: (event?: SyntheticEvent, reason?: string) => void
-}
+export const CustomSnackbar = () => {
+  const uiStateStore = useStore(StoreType.UI) as UIStateStore
 
-export const CustomSnackbar = (props: ISuccessSnackbar) => {
-  const { options, handleClose } = props
-  const { message, open, variant } = options
+  const handleClose = (event?: SyntheticEvent, reason?: string) => {
+    console.log('hide called', reason)
+    if (reason === 'clickaway') {
+      return
+    }
+
+    uiStateStore.hideSnackbar()
+  }
+
   const classes = useStyles2()
 
-  return (
+  return useObserver(() => (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
       }}
-      open={open}
+      open={uiStateStore.snackbarOptions.open}
       autoHideDuration={4000}
       onClose={handleClose}
     >
       <SnackbarContentWrapper
-        variant={variant}
+        variant={uiStateStore.snackbarOptions.variant}
         className={classes.margin}
-        message={message}
+        message={uiStateStore.snackbarOptions.message}
+        onClose={handleClose}
       />
     </Snackbar>
-  )
+  ))
 }

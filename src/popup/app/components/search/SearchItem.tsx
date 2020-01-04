@@ -10,6 +10,7 @@ import { EmployeeStore } from '../../store/EmployeeStore'
 import { SettingStore, ShortcutType } from '../../store/SettingStore'
 import { CustomSnackbar, SnackbarVariant } from '../snackbar'
 import useSearchItemStyle from './searchItemStyles'
+import { UIStateStore } from '../../store/UIStateStore'
 
 let imeUpdating = false
 
@@ -19,16 +20,6 @@ const handleCompositionUpdate = (e: React.CompositionEvent<HTMLInputElement>) =>
 
 const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
   imeUpdating = false
-}
-
-const defaultSnackbarOptions = {
-  open: false,
-  message: '',
-  variant: SnackbarVariant.Info,
-}
-
-const hideSnackbar = (snackbarOptions: any, setSnackbarOptions: any) => {
-  setSnackbarOptions({ ...snackbarOptions, open: false })
 }
 
 export const openShortcutLink = (shortcut: ShortcutType | undefined) => {
@@ -45,26 +36,16 @@ export const openShortcutLink = (shortcut: ShortcutType | undefined) => {
 export const SearchItem = () => {
   const store = useStore() as EmployeeStore
   const settingStore = useStore(StoreType.Setting) as SettingStore
+  const uiStore = useStore(StoreType.UI) as UIStateStore
   store.inputRef = useRef()
 
   const history = useHistory()
   const [keywords, setKeywords] = useState('')
-  const [snackbarOptions, setSnackbarOptions] = useState(defaultSnackbarOptions)
-
-  const handleClose = (event?: SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-
-    hideSnackbar(snackbarOptions, setSnackbarOptions)
-  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywords(e.target.value)
 
-    if (snackbarOptions.open) {
-      hideSnackbar(snackbarOptions, setSnackbarOptions)
-    }
+    uiStore.hideSnackbar()
   }
 
   const handleSearch = () => {
@@ -81,8 +62,7 @@ export const SearchItem = () => {
     }
 
     if (keywords.length < 2) {
-      setSnackbarOptions({
-        ...snackbarOptions,
+      uiStore.showSnackbar({
         variant: SnackbarVariant.Error,
         open: true,
         message: '2글자 이상 입력해야 합니다',
@@ -154,10 +134,6 @@ export const SearchItem = () => {
             Search<SearchIcon />
           </div>
         </Button>
-        <CustomSnackbar
-          options={snackbarOptions}
-          handleClose={handleClose}
-        />
       </div>
     </React.Fragment>
   )
