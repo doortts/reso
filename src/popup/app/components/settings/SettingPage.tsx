@@ -21,30 +21,60 @@ const useStyles = makeStyles(theme => createStyles({
     minWidth: 450,
     maxWidth: 650,
   },
+  h1: {
+    display: 'block',
+    fontSize: '2em',
+    marginBlockStart: '0.67em',
+    marginBlockEnd: '0.67em',
+    marginInlineStart: '0px',
+    marginInlineEnd: '0px',
+    fontWeight: 'bold',
+  },
+  h2: {
+    display: 'block',
+    fontSize: '1.5em',
+    marginBlockStart: '0.83em',
+    marginBlockEnd: '0.83em',
+    marginInlineStart: '0px',
+    marginInlineEnd: '0px',
+    fontWeight: 'bold',
+  },
+  link: {
+    color: '#2373f4',
+  },
 }))
 
 const SettingPage = () => {
   const classes = useStyles()
 
   return (
-    <Paper className={classes.paper}>
-      <h1><Link to="/">⬅ Back</Link></h1>
-      <h1>설정 페이지</h1>
+    <>
+      <h2 className={classes.h2}>
+        <Link to="/" className={classes.link}>⬅ Back</Link>
+      </h2>
+      <h1 className={classes.h1}>설정 페이지</h1>
       <div>
         {/* tslint:disable-next-line:max-line-length */}
-        Report bug: <a href="https://oss.navercorp.com/communication-service/kick" target="_blank">https://oss.navercorp.com/communication-service/kick</a>
+        Report bug:
+        <a
+          href="https://oss.navercorp.com/communication-service/kick"
+          target="_blank"
+          className={classes.link}
+        >https://oss.navercorp.com/communication-service/kick</a>
       </div>
-      <h2>초기화</h2>
+      <Paper className={classes.paper}>
+      <h2 className={classes.h2}>초기화</h2>
       <div>
         <div>Clear all internally saved data including Star bookmarks</div>
         <div><Button variant="contained" color="secondary">CLEAR ALL SETTINGS</Button></div>
       </div>
+      </Paper>
       <div>
-        <OneLetterShortcuts />
+      <OneLetterShortcuts />
       </div>
-      <div>
+      <Paper className={classes.paper}>
         <div>
-          <h2>Shortcut keys</h2>
+          <h2 className={classes.h2}>Shortcut keys</h2>
         </div>
         <div>
           <Table aria-label="simple table" className={classes.table}>
@@ -81,8 +111,8 @@ const SettingPage = () => {
         <p>
           * 멘션 기능은 사내 Github Enterprise 사이트와 사내메일의 이메일주소 입력창에서만 동작합니다.
         </p>
-      </div>
-    </Paper>
+      </Paper>
+      </>
   )
 }
 
