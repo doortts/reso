@@ -56,6 +56,7 @@ const OneLetterShortcuts = () => {
       ))}
       <ShortcutField
         shortcut={{
+          idx: Date.now(),
           key: '',
           desc: '',
           url: '',

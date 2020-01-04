@@ -4,7 +4,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
 
-import { ShortcutType } from '../../store/SettingStore'
+import { SettingStore, ShortcutType } from '../../store/SettingStore'
+import { StoreType, useStore } from '../../context'
 
 interface IProps {
   shortcut: ShortcutType
@@ -12,6 +13,8 @@ interface IProps {
 }
 
 const ShortcutField = (props: IProps) => {
+  const store = useStore(StoreType.Setting) as SettingStore
+
   const { shortcut, renderButton: RenderButton } = props
   const [keyMap, setKeyMap] = useState({ ...shortcut })
 
@@ -22,6 +25,19 @@ const ShortcutField = (props: IProps) => {
       ...keyMap,
       [name]: event.target.value,
     })
+
+    const updatedShortcuts = store.oneLetterShortcuts.map(currentShortcut => {
+      if (currentShortcut.idx === keyMap.idx) {
+        return ({
+          ...keyMap,
+          [name]: event.target.value,
+        })
+      } else {
+        return currentShortcut
+      }
+    })
+
+    store.setOneLetterShortcuts(updatedShortcuts)
   }
 
   return (

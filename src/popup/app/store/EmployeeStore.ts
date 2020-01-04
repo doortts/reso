@@ -225,6 +225,7 @@ export class EmployeeStore {
 
   resetCurrentSelect = () => this.selectedEmployeeIndex = 0
 
+  @action
   addToFavoriteEmployees = (target: IEmployee) => {
     const found = this.favoriteEmployees.find(
       (employee: IEmployee) => employee.employeeNumber === target.employeeNumber,
