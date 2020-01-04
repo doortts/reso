@@ -56,12 +56,25 @@ export const HelpMessage: React.FC<Props> = observer(props => {
     }
   }
 
+  const getStateBgColor = () => {
+    if (store.state.toLowerCase() === 'ready') {
+      return ('#e0e0e0')
+    } else if (store.state.toLowerCase() === 'done' || store.state.toLowerCase().startsWith('found')) {
+      return ('#8bc34a')
+    } else if (store.state.toLowerCase().startsWith('error')) {
+      return ('#ff8a65')
+    } else {
+      return ('#a1887f')
+    }
+  }
+
   return (
     <div>
       <Chip
         icon={getStateFace()}
         className={classes.chip}
         label={store.state}
+        style={{ backgroundColor: getStateBgColor()}}
       />
       {getRandomTip()}
       <Backdrop
