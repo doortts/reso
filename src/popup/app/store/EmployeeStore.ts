@@ -158,13 +158,18 @@ export class EmployeeStore {
           this.sendErrorLog(user, error)
         })
       })
+    }).catch(error => {
+      this.state = 'Error! '
+      this.isLoading = false
+      console.error(error)
+      this.sendErrorLog(query, error.response.status, error.response.data)
     })
   }
 
   sendErrorLog = async (...errors: any[]) => {
     const success = await axios({
       method: 'POST',
-      url: `${this.env.LOG_SERVER}`,
+      url: `https://${this.env.LOG_SERVER}`,
       data: {
         projectName: 'mgkick',
         projectVersion: '2.0.0',
