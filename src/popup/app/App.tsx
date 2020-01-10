@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme =>
     Toolbar: {
       justifyContent: 'space-between',
     },
-  }),
+  })
 )
 
 function ScrollTop(props: Props) {
@@ -66,7 +66,7 @@ function ScrollTop(props: Props) {
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const anchor = ((event.target as HTMLDivElement).ownerDocument || document).querySelector(
-      '#back-to-top-anchor',
+      '#back-to-top-anchor'
     )
 
     if (anchor) {

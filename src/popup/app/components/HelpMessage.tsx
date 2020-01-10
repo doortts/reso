@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     chip: {
       margin: theme.spacing(0.5),
     },
-  }),
+  })
 )
 
 const getRandomTip = () => {

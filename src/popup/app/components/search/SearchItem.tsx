@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button'
@@ -8,9 +8,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import { StoreType, useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
 import { SettingStore, ShortcutType } from '../../store/SettingStore'
-import { CustomSnackbar, SnackbarVariant } from '../snackbar'
-import useSearchItemStyle from './searchItemStyles'
 import { UIStateStore } from '../../store/UIStateStore'
+import { SnackbarVariant } from '../snackbar'
+import useSearchItemStyle from './searchItemStyles'
 
 let imeUpdating = false
 

@@ -62,7 +62,7 @@ const useSearchItemStyle = makeStyles(theme =>
     menu: {
       width: 200,
     },
-  }),
+  })
 )
 
 export default useSearchItemStyle

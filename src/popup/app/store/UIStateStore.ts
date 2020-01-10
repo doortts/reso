@@ -1,4 +1,5 @@
 import { observable } from 'mobx'
+
 import { SnackbarVariant } from '../components/snackbar'
 import RootStore from './RootStore'
 

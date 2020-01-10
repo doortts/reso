@@ -228,7 +228,7 @@ export class EmployeeStore {
   @action
   addToFavoriteEmployees = (target: IEmployee) => {
     const found = this.favoriteEmployees.find(
-      (employee: IEmployee) => employee.employeeNumber === target.employeeNumber,
+      (employee: IEmployee) => employee.employeeNumber === target.employeeNumber
     )
 
     if (!found) {
@@ -238,12 +238,12 @@ export class EmployeeStore {
 
   removeFromFavoriteEmployees = (target: IEmployee) => {
     this.favoriteEmployees = this.favoriteEmployees.filter(
-      (employee: IEmployee) => employee.employeeNumber !== target.employeeNumber,
+      (employee: IEmployee) => employee.employeeNumber !== target.employeeNumber
     )
   }
 
   isFavoredEmployee = (target: IEmployee) => this.favoriteEmployees.find(
-    employee => target.employeeNumber === employee.employeeNumber,
+    employee => target.employeeNumber === employee.employeeNumber
   )
 
   getEmployeeAddressPageUrl = () => this.env.ADDRESS_PAGE + this.getSelectedEmployee()?.mail

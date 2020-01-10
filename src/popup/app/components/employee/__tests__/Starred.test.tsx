@@ -16,7 +16,7 @@ describe('Starred', () => {
     const wrapper = mount(
       <StoreProvider store={rootStore}>
         <Starred employee={mockEmployees[0]} />
-      </StoreProvider>,
+      </StoreProvider>
     )
 
     // When
