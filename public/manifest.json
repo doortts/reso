@@ -4,7 +4,7 @@
   "description": "OSS/ES user mention & search extension",
   "version": "2.0.2",
   "browser_action": {
-    "default_title": "Save your time!",
+    "default_title": "CMD+K / ALT+SHIFT+K",
     "default_popup": "/popup.html"
   },
   "icons": {

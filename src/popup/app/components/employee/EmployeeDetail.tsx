@@ -1,14 +1,17 @@
 import React from 'react'
 
-import { useObserver } from 'mobx-react-lite'
+import { observer, useObserver } from 'mobx-react-lite'
 
 import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import ChatIcon from '@material-ui/icons/Chat'
+import MailIcon from '@material-ui/icons/Mail'
 
 import { useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
@@ -43,11 +46,15 @@ const useStyles = makeStyles(theme =>
       height: 38,
       width: 38,
     },
-  }),
+    chatIcon: {
+      color: 'green',
+    },
+  })
 )
 
-export const EmployeeDetail = React.memo(() => {
+export const EmployeeDetail = observer(() => {
   const store = useStore() as EmployeeStore
+  const employee = store.getSelectedEmployee()
 
   const classes = useStyles()
   const theme = useTheme()
@@ -56,8 +63,17 @@ export const EmployeeDetail = React.memo(() => {
     chrome?.windows.create({ url: store.getEmployeeAddressPageUrl() })
   }
 
+  const handleOpenChat = () => {
+    const chatUrl = `https://talk.navercorp.com/join?mailList=["${employee?.mail}"]`
+    chrome?.windows.create({ url: chatUrl })
+  }
+
+  const handleOpenMail = () => {
+    const mailUrl = `https://mail.navercorp.com/write/popup/?to="${employee?.displayName}"<${employee?.mail}>`
+    chrome?.windows.create({ url: mailUrl, width: 660, height: 960, type: 'popup' })
+  }
+
   return useObserver(() => {
-      const employee = store.getSelectedEmployee()
       if (!employee) {
         return (<div></div>)
       }
@@ -93,6 +109,16 @@ export const EmployeeDetail = React.memo(() => {
                   <div>{telephoneNumber} </div>
                   <div>{mail}</div>
                   <div>
+                    <ButtonGroup aria-label="outlined primary button group">
+                      <Button onClick={handleOpenChat}>
+                        <ChatIcon fontSize="small" className={classes.chatIcon}/>
+                      </Button>
+                      <Button onClick={handleOpenMail}>
+                        <MailIcon fontSize="small" className={classes.chatIcon}/>
+                      </Button>
+                    </ButtonGroup>
+                  </div>
+                  <div>
                     <ServerNames
                       idExistingServers={employee?.idExistingServers}
                       showLoginId={true}
@@ -115,6 +141,6 @@ export const EmployeeDetail = React.memo(() => {
           </Card>
         </div>
       )
-    },
+    }
   )
 })

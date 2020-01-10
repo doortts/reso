@@ -7,11 +7,10 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { StoreType, useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
+import { UIStateStore } from '../../store/UIStateStore'
 import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
 import { sendUserIdToActiveTab } from './mention'
-import { SnackbarVariant } from '../snackbar'
-import { UIStateStore } from '../../store/UIStateStore'
 
 interface Props {
   employee: IEmployee
@@ -66,14 +65,14 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (e.metaKey) {
       chrome?.windows.create({ url: store.getEmployeeAddressPageUrl() })
+      return
+    } else if (e.shiftKey) {
+      const chatUrl = `https://talk.navercorp.com/join?mailList=["${employee?.mail}"]`
+      chrome?.windows.create({ url: chatUrl })
+      return
     } else {
       if (employee.idExistingServers?.length === 0) {
-        uiStore.showSnackbar({
-          variant: SnackbarVariant.Error,
-          open: true,
-          message: '해당유저가 확인되지 않았습니다. oss/es에 로그인을 한 번도 한 적이 없거나 아이디를 변경한 유저일 수 있습니다.',
-        })
-        return
+          return
       }
       employee.idExistingServers?.map(server => {
         sendUserIdToActiveTab(server, store.githubServers)

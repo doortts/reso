@@ -3,10 +3,11 @@ import React from 'react'
 import { useObserver } from 'mobx-react-lite'
 
 import { useStore } from '../../context'
+import { EmployeeStore } from '../../store/EmployeeStore'
 import EmployeeContainer, { IEmployee } from './EmployeeContainer'
 
 export const Employees = React.memo((): any => {
-  const store = useStore()
+  const store = useStore() as EmployeeStore
 
   return useObserver(() => (
     store.employees.map((employee: IEmployee) => {

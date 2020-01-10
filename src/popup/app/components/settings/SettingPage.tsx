@@ -10,11 +10,11 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-import OneLetterShortcuts from './OneLetterShortcuts'
-import { SnackbarVariant } from '../snackbar'
 import { StoreType, useStore } from '../../context'
-import { UIStateStore } from '../../store/UIStateStore'
 import { EmployeeStore } from '../../store/EmployeeStore'
+import { UIStateStore } from '../../store/UIStateStore'
+import { SnackbarVariant } from '../snackbar'
+import OneLetterShortcuts from './OneLetterShortcuts'
 
 const useStyles = makeStyles(theme => createStyles({
   paper: {
@@ -123,7 +123,7 @@ const SettingPage = () => {
           >URL 복사</Button> 를 입력하시면 변경 가능합니다.
         </div>
         <div>
-          <Table aria-label="simple table" className={classes.table}>
+          <Table aria-label="simple table" size="small" className={classes.table}>
             <TableHead>
               <TableRow>
                 <TableCell style={{ maxWidth: '100px' }}>Shortcut</TableCell>
@@ -148,8 +148,12 @@ const SettingPage = () => {
                 <TableCell>Mention</TableCell>
               </TableRow>
               <TableRow key="Cmd + Enter">
-                <TableCell component="th" scope="row">ALT + Enter | CMD + Enter</TableCell>
+                <TableCell component="th" scope="row">CMD + Enter / ALT + Enter</TableCell>
                 <TableCell>사원 정보 상세 페이지 열기</TableCell>
+              </TableRow>
+              <TableRow key="Shift + Enter">
+                <TableCell component="th" scope="row">Shift + Enter</TableCell>
+                <TableCell>채팅창 열기</TableCell>
               </TableRow>
             </TableBody>
           </Table>
