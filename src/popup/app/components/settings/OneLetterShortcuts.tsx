@@ -41,7 +41,7 @@ const OneLetterShortcuts = () => {
   const keyForAdd = Date.now()
 
   return useObserver(() => (
-    <div style={{ margin: '35px' }}>
+    <>
       <h2 className={classes.h2}>한 글자 단축키</h2>
       {store.oneLetterShortcuts.map(shortcut => (
         <div key={shortcut.idx}>
@@ -73,7 +73,7 @@ const OneLetterShortcuts = () => {
           }
         />
       </div>
-    </div>
+    </>
   ))
 }
 

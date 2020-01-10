@@ -74,7 +74,6 @@ export const CustomSnackbar = () => {
   const uiStateStore = useStore(StoreType.UI) as UIStateStore
 
   const handleClose = (event?: SyntheticEvent, reason?: string) => {
-    console.log('hide called', reason)
     if (reason === 'clickaway') {
       return
     }

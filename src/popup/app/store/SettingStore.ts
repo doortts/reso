@@ -81,7 +81,6 @@ export class SettingStore {
     this.oneLetterShortcuts = oneLetterShortcuts
     debounce(() => {
       storage.set({ oneLetterShortcuts: toJS(this.oneLetterShortcuts) })
-      console.log('sync called')
     }, delay)
   }
 
@@ -90,7 +89,6 @@ export class SettingStore {
     let validated = true
 
     Object.keys(this.newCandidateShortcut).forEach(key => {
-      console.log('> ', key, !this.newCandidateShortcut[key], this.newCandidateShortcut)
       if (!this.newCandidateShortcut[key]) {
         this.rootStore.uiStateStore.showSnackbar({
           variant: SnackbarVariant.Error,

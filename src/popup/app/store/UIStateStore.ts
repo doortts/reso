@@ -22,7 +22,6 @@ export class UIStateStore {
   }
 
   hideSnackbar = () => {
-    console.log('call hide')
     if (this.snackbarOptions.open) {
       this.snackbarOptions = { ...this.snackbarOptions, open: false }
     }

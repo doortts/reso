@@ -55,13 +55,11 @@ export class ServerStore {
                 .then(response => {
                   if (response.data?.items.length > 0) {
                     user.displayName += server.name
-                    console.log(user.displayName)
                     user.idExistingServers?.push({
                       name: server.name,
                       loginId: response.data.items[0].login,
                     })
                   }
-                  console.log(user)
                 })
               return
             default:

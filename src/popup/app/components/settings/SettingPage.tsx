@@ -64,6 +64,9 @@ const SettingPage = () => {
     })
   }
 
+  const mainifest = chrome?.runtime?.getManifest && chrome?.runtime?.getManifest()
+  const version = mainifest?.version ? 'v' + mainifest.version : ''
+
   const classes = useStyles()
 
   return (
@@ -71,37 +74,53 @@ const SettingPage = () => {
       <h2 className={classes.h2}>
         <Link to="/" className={classes.link}>⬅ Back</Link>
       </h2>
-      <h1 className={classes.h1}>설정 페이지</h1>
-      <div>
-        {/* tslint:disable-next-line:max-line-length */}
-        Report bug:
-        <a
-          href="https://oss.navercorp.com/communication-service/kick"
-          target="_blank"
-          className={classes.link}
-        >https://oss.navercorp.com/communication-service/kick</a>
+      <div style={{ margin: '35px' }}>
+        <h1 className={classes.h1}>설정 페이지</h1>
+        <div>{version}</div>
+        <div>
+          {/* tslint:disable-next-line:max-line-length */}
+          Report bug:
+          <a
+            href="https://oss.navercorp.com/communication-service/kick"
+            target="_blank"
+            className={classes.link}
+          >https://oss.navercorp.com/communication-service/kick</a>
+        </div>
+
       </div>
       <Paper className={classes.paper}>
-      <h2 className={classes.h2}>초기화</h2>
-      <div>
-        <div>Clear all internally saved data including Star bookmarks</div>
+        <h2 className={classes.h2}>초기화</h2>
         <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleClearAll}
-          >
-            CLEAR ALL SETTINGS
-          </Button>
+          <div>Clear all internally saved data including Star bookmarks</div>
+          <div>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleClearAll}
+            >
+              CLEAR ALL SETTINGS
+            </Button>
+          </div>
         </div>
-      </div>
       </Paper>
-      <div>
-      <OneLetterShortcuts />
+      <div style={{ margin: '35px' }}>
+        <OneLetterShortcuts />
       </div>
       <Paper className={classes.paper}>
         <div>
           <h2 className={classes.h2}>Shortcut keys</h2>
+        </div>
+        <div>
+          플러그인 실행 기본 단축키 변경은 URL에
+          <span className={classes.link}> chrome://extensions/shortcuts </span>
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              navigator.clipboard.writeText('chrome://extensions/shortcuts')
+            }}
+          >URL 복사</Button> 를 입력하시면 변경 가능합니다.
         </div>
         <div>
           <Table aria-label="simple table" className={classes.table}>
@@ -128,9 +147,9 @@ const SettingPage = () => {
                 <TableCell component="th" scope="row">Enter</TableCell>
                 <TableCell>Mention</TableCell>
               </TableRow>
-              <TableRow key="Shift + Enter">
+              <TableRow key="Cmd + Enter">
                 <TableCell component="th" scope="row">ALT + Enter | CMD + Enter</TableCell>
-                <TableCell>사내 주소 페이지 열기</TableCell>
+                <TableCell>사원 정보 상세 페이지 열기</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -139,7 +158,7 @@ const SettingPage = () => {
           * 멘션 기능은 사내 Github Enterprise 사이트와 사내메일의 이메일주소 입력창에서만 동작합니다.
         </p>
       </Paper>
-      </>
+    </>
   )
 }
 

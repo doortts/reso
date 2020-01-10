@@ -89,7 +89,6 @@ export class EmployeeContainer extends React.PureComponent<Props, {}> {
   render() {
     const { isSelected } = this.props
 
-    console.log('EmployeeContainer', isSelected)
     return (
       <Observer render={() => (
         <Employee

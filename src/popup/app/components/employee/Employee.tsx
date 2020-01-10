@@ -5,11 +5,13 @@ import { observer } from 'mobx-react-lite'
 import ListItem from '@material-ui/core/ListItem'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useStore } from '../../context'
+import { StoreType, useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
 import { IEmployee } from './EmployeeContainer'
 import { EmployeeView } from './EmployeeView'
 import { sendUserIdToActiveTab } from './mention'
+import { SnackbarVariant } from '../snackbar'
+import { UIStateStore } from '../../store/UIStateStore'
 
 interface Props {
   employee: IEmployee
@@ -58,12 +60,21 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
   const focusStyle = isSelected ? bgColor : {}
 
   const store = useStore() as EmployeeStore
+  const uiStore = useStore(StoreType.UI) as UIStateStore
   const classes = useStyles()
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     if (e.metaKey) {
       chrome?.windows.create({ url: store.getEmployeeAddressPageUrl() })
     } else {
+      if (employee.idExistingServers?.length === 0) {
+        uiStore.showSnackbar({
+          variant: SnackbarVariant.Error,
+          open: true,
+          message: '해당유저가 확인되지 않았습니다. oss/es에 로그인을 한 번도 한 적이 없거나 아이디를 변경한 유저일 수 있습니다.',
+        })
+        return
+      }
       employee.idExistingServers?.map(server => {
         sendUserIdToActiveTab(server, store.githubServers)
       })
@@ -90,15 +101,12 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       case 'ㄹ':
         e.preventDefault()
         store.focusInput()
-        console.log('F')
         break
       default:
-        console.log(e.key)
         break
     }
   }
 
-  console.log('Employee.tsx')
   return (
     <ListItem
       onClick={handleClick}
