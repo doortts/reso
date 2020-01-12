@@ -68,7 +68,7 @@ export const Employee: React.FC<Props> = observer<Props>(props => {
       return
     } else if (e.shiftKey) {
       const chatUrl = `https://talk.navercorp.com/join?mailList=["${employee?.mail}"]`
-      chrome?.windows.create({ url: chatUrl })
+      chrome?.windows.create({ url: chatUrl, type: 'popup', width: 1024, height: 900 })
       return
     } else {
       if (employee.idExistingServers?.length === 0) {

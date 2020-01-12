@@ -65,7 +65,7 @@ export const EmployeeDetail = observer(() => {
 
   const handleOpenChat = () => {
     const chatUrl = `https://talk.navercorp.com/join?mailList=["${employee?.mail}"]`
-    chrome?.windows.create({ url: chatUrl })
+    chrome?.windows.create({ url: chatUrl, type: 'popup', width: 1024, height: 900 })
   }
 
   const handleOpenMail = () => {
