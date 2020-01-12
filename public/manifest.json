@@ -23,7 +23,7 @@
     "scripts": ["/background/background.js"]
   },
   "permissions": [
-    "identity","identity.email","activeTab","http://*/*", "storage", "https://www.google-analytics.com/"
+    "activeTab","http://*/*", "storage", "https://www.google-analytics.com/"
   ],
   "options_ui": {
     "page": "/popup.html",
