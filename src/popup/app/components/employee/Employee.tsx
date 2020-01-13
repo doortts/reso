@@ -19,7 +19,7 @@ interface Props {
 
 const useStyles = makeStyles(theme => ({
   listItem: {
-    padding: theme.spacing(0.5),
+    padding: '3px',
     boxSizing: 'border-box',
     borderRadius: '3px',
     '&:focus': {

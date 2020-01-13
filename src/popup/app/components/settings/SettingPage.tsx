@@ -123,37 +123,37 @@ const SettingPage = () => {
           >URL 복사</Button> 를 입력하시면 변경 가능합니다.
         </div>
         <div>
-          <Table aria-label="simple table" size="small" className={classes.table}>
+          <Table size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell style={{ maxWidth: '100px' }}>Shortcut</TableCell>
-                <TableCell>Description</TableCell>
+                <TableCell size="small">Shortcut</TableCell>
+                <TableCell size="small">Description</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow key="f">
-                <TableCell component="th" scope="row">f</TableCell>
-                <TableCell>검색창으로 이동</TableCell>
+                <TableCell size="small">f</TableCell>
+                <TableCell size="small">검색창으로 이동</TableCell>
               </TableRow>
               <TableRow key="Cmd+K">
-                <TableCell size="small" component="th" scope="row"> Cmd + K </TableCell>
-                <TableCell>Popup (Mac OS)</TableCell>
+                <TableCell size="small"> Cmd + K </TableCell>
+                <TableCell size="small">Popup (Mac OS)</TableCell>
               </TableRow>
               <TableRow key="Alt+Shift+K">
-                <TableCell component="th" scope="row">Alt + Shift + K</TableCell>
-                <TableCell>Popup (Windows/Linux)</TableCell>
+                <TableCell size="small">Alt + Shift + K</TableCell>
+                <TableCell size="small">Popup (Windows/Linux)</TableCell>
               </TableRow>
               <TableRow key="Enter">
-                <TableCell component="th" scope="row">Enter</TableCell>
-                <TableCell>Mention</TableCell>
+                <TableCell size="small">Enter</TableCell>
+                <TableCell size="small">Mention</TableCell>
               </TableRow>
               <TableRow key="Cmd + Enter">
-                <TableCell component="th" scope="row">CMD + Enter / ALT + Enter</TableCell>
-                <TableCell>사원 정보 상세 페이지 열기</TableCell>
+                <TableCell size="small">CMD + Enter / ALT + Enter</TableCell>
+                <TableCell size="small">사원 정보 상세 페이지 열기</TableCell>
               </TableRow>
               <TableRow key="Shift + Enter">
-                <TableCell component="th" scope="row">Shift + Enter</TableCell>
-                <TableCell>채팅창 열기</TableCell>
+                <TableCell size="small">Shift + Enter</TableCell>
+                <TableCell size="small">채팅창 열기</TableCell>
               </TableRow>
             </TableBody>
           </Table>

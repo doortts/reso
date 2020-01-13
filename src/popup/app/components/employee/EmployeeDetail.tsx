@@ -16,6 +16,7 @@ import MailIcon from '@material-ui/icons/Mail'
 import { useStore } from '../../context'
 import { EmployeeStore } from '../../store/EmployeeStore'
 import ServerNames from './ServerNames'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const addDefaultSrc = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
   (e.target as HTMLImageElement).src = '/images/default-avatar-64.png'
@@ -110,11 +111,13 @@ export const EmployeeDetail = observer(() => {
                   <div>{mail}</div>
                   <div>
                     <ButtonGroup aria-label="outlined primary button group">
-                      <Button onClick={handleOpenChat}>
-                        <ChatIcon fontSize="small" className={classes.chatIcon}/>
-                      </Button>
+                      <Tooltip title={'Shift+Enter'} aria-label="open chat">
+                        <Button onClick={handleOpenChat}>
+                          <ChatIcon fontSize="small" className={classes.chatIcon} />
+                        </Button>
+                      </Tooltip>
                       <Button onClick={handleOpenMail}>
-                        <MailIcon fontSize="small" className={classes.chatIcon}/>
+                        <MailIcon fontSize="small" className={classes.chatIcon} />
                       </Button>
                     </ButtonGroup>
                   </div>
